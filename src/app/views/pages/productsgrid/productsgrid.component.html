@@ -1,0 +1,89 @@
+<div class="content__loader" *ngIf="loader">
+  <div><i class="Favicon"></i></div>
+</div>
+
+<section id="product_details">
+
+  <div class="col-md-12 text-end mb-3">
+    <button class="btn btn-primary" style="width: 15%;" (click)="Add_Product()"> + Add </button>
+  </div>
+
+  <div class="card" *ngIf="!PrductsData.length">
+    <div class="card-body">
+      <div class="col-md-12">
+        <h6> NO DATA AVAILABLE..!</h6>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="PrductsData?.length>0">
+    <div class="card_bg mb-3" *ngFor="let item of PrductsData">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="head-title">Purchase Order</div>
+            <div><b>{{item.Poordernumber}}</b></div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="head-title">Customer</div>
+            <div> <b>{{item.customer}}</b></div>
+          </div>
+
+          <div class="col-md-3 text-right">
+            <div class="head-title">Issue Date</div>
+            <div> <b>{{item.issueDatetime | date : 'dd/MM/yyyy'}}</b></div>
+          </div>
+
+          <div class="col-md-3 text-right">
+            <div class="head-title">Ship Date</div>
+            <div> <b>{{item.shipdatetime | date : 'dd/MM/yyyy'}}</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-2 p-3" id="product_list">
+        <ng-container *ngFor="let product of item.productDetails">
+          <div class="col-lg-3 col-md-6 img-responsive" style="flex: 0 0 25%; max-width: 20%;">
+            <div class="card card_curv" [ngClass]="{'active': product.productid == selectedCTY}"
+              (click)="Select_Product(product,item)">
+              <img alt="Card image cap" class="card-img-top img-responsive" [src]="product.Imgurl"
+                onerror="this.src='assets/images/150-150.jpg'">
+              <div class="card-body">
+                <h5>{{product.productname}}</h5>
+                <ul style="list-style-type: none; text-align: left; padding: 0px;">
+                  <li>SKU : {{product.sku}}</li>
+                  <li>Brand : {{product.productbrand}}</li>
+                  <li>Size : {{product.size}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- <div class="Product_Grid mt-3">
+    <ul id="Product_Items">
+      <ng-container *ngFor="let product of item.productDetails">
+        <li [ngClass]="{'active': product.productId == selectedCTY}" (click)="Select_Product(product)">
+          <div class="box">
+            <img [src]="product.Imgurl" class="crop" alt="{{product.productName}}">
+            <div>
+              <h6>{{product.productName}}</h6>
+              <ul style="list-style-type: none; text-align: left; padding: 0px;">
+                <li class="list">SKU : {{product.SKU}}</li>
+                <li class="list">Barnd : {{product.Brand}}</li>
+                <li class="list">Size : {{product.Size}}</li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ng-container>
+    </ul>
+  </div> -->
+
+    </div>
+  </ng-container>
+
+
+</section>

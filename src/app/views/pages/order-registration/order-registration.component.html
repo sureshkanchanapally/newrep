@@ -1,0 +1,124 @@
+<section class="breadcrumb">
+  <nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><b style="font-size: 20px;">Order Registration</b></li>
+      <!-- <li class="breadcrumb-item active" aria-current="page">Data table</li> -->
+    </ol>
+  </nav>
+</section>
+
+<section id="OrderRegistrationForm">
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="OrderRegistartionForm">
+        <div class="row">
+          <div class="col-md-4 form-group mb-3">
+            <label class="col-form-label required">Order Number</label>
+            <input (keyup)="Allow_Only('[^0-9]','ordernumber')" type="text" class="form-control"
+              formControlName="ordernumber" placeholder="Order Number">
+            <div class="invalid_feedback"
+              *ngIf="submitted && OrderRegistartionForm.get('ordernumber')!.hasError('required')">
+              Order Number is required
+            </div>
+          </div>
+
+          <div class="col-md-4 form-group mb-3">
+            <label class="col-form-label required">Buyers</label>
+            <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="Buyers_Data" [placeholder]="'Select Buyer'"
+              formControlName="buyer">
+            </ng-multiselect-dropdown>
+            <div class="invalid_feedback" *ngIf="submitted && OrderRegistartionForm.get('buyer')!.hasError('required')">
+              Factory Name is required
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 form-group mb-3">
+            <label class="col-form-label required">Order Date</label>
+            <input type="date" class="form-control" formControlName="orderdate">
+            <div class="invalid_feedback"
+              *ngIf="submitted && OrderRegistartionForm.get('orderdate')!.hasError('required')">
+              Order Date is required
+            </div>
+          </div>
+
+          <div class="col-md-4 form-group mb-3">
+            <label class="col-form-label required">Shipping Date</label>
+            <input type="date" class="form-control" formControlName="shipdate">
+            <div class="invalid_feedback"
+              *ngIf="submitted && OrderRegistartionForm.get('shipdate')!.hasError('required')">
+              Shipping Date is required
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="row">
+        <div class="col-md-5">
+          <h6 class="mb-2 mt-4">Products</h6>
+        </div>
+      </div>
+
+      <div class="row mb-2" *ngFor="let item of Prodcuts;let i = index;let k =last">
+        <div class="col-sm-2 form-group mb-3">
+          <label class="col-form-label required">Factory</label>
+          <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="FactoryData" [(ngModel)]="Prodcuts[i].Factoryid"
+            [placeholder]="'Select Factory'" (onSelect)="onFactorySelect($event,i)"></ng-multiselect-dropdown>
+          <div class="invalid_feedback" *ngIf="Prodcuts[i].ValidationStatus && Prodcuts[i].Factoryid == ''">
+            Factory is required
+          </div>
+
+        </div>
+        <div class="col-sm-2 form-group mb-3">
+          <label class="col-form-label required">Category</label>
+          <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="Prodcuts[i].Categ_Info"
+            [(ngModel)]="Prodcuts[i].categoryid" [placeholder]="'Select Category'"></ng-multiselect-dropdown>
+          <div class="invalid_feedback" *ngIf="Prodcuts[i].ValidationStatus && Prodcuts[i].categoryid == ''">
+            Category is required
+          </div>
+        </div>
+
+        <div class="col-sm-2 form-group mb-3">
+          <label class="col-form-label required">Product Name</label>
+          <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="Products_Data" [(ngModel)]="Prodcuts[i].productid"
+            [placeholder]="'Select Product'"></ng-multiselect-dropdown>
+          <div class="invalid_feedback" *ngIf="Prodcuts[i].ValidationStatus && Prodcuts[i].productid == ''">
+            Product Name is required
+          </div>
+        </div>
+
+        <div class="col-sm-2 form-group mb-3">
+          <label class="col-form-label required">Quantity</label>
+          <input type="number" class="form-control" placeholder="Qty"  [(ngModel)]="Prodcuts[i].qty">
+          <div class="invalid_feedback" *ngIf="Prodcuts[i].ValidationStatus && Prodcuts[i].qty == ''">
+            Quantity is required
+          </div>
+        </div>
+
+        <div class="col-sm-2 form-group mb-3">
+          <label class="col-form-label required">AQL</label>
+          <input type="text" class="form-control" placeholder="AQL" [(ngModel)]="Prodcuts[i].AQL">
+          <div class="invalid_feedback" *ngIf="Prodcuts[i].ValidationStatus && Prodcuts[i].AQL == ''">
+            AQL is required
+          </div>
+        </div>
+
+        <div class="col-sm-2 form-group mb-3" style="margin-top: 36px;">
+          <button class="btn btn-outline-success" (click)="AddProd()" *ngIf="k">
+            <i class="mdi mdi-plus"></i>
+          </button>&nbsp;
+          <button class="btn btn-outline-danger" (click)="DelProd(i)" [disabled]="i == 0 && Prodcuts.length == 1"><i
+              class="mdi mdi-delete"></i></button>
+        </div>
+      </div>
+
+      <div class="col-md-12 text-end mt-3">
+        <button type="submit" class="btn btn-primary btnWidthSub" (click)="OnSubmit()"
+          [ngClass]="{'button--loading':validbutton}"><span>Save</span></button>
+      </div>
+    </div>
+  </div>
+
+</section>

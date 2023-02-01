@@ -1,0 +1,221 @@
+<section class="breadcrumb">
+  <nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><b style="font-size: 20px;">Roles</b></li>
+    </ol>
+  </nav>
+</section>
+
+<section id="role_details" *ngIf="Hide_Table1">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <h4 class="m-b-20 m-t-2">Roles</h4>
+        </div>
+
+        <div class="col-md-6">
+          <div class="col-md-12 form-group text-end ">
+            <button type="submit" class="btn btn-primary" (click)="Add_Roles()"> + Add</button>
+          </div>
+        </div>
+      </div>
+
+      <ng-container class="col-sm-12" *ngIf="!RolessData.length && No_Details1">
+        <h4 class="mt-3"><b>GETTING DETAILS</b>
+          <p>Please wait..</p>
+        </h4>
+        <div class="animated-background profile-image" style="height: 100px">
+        </div>
+        <div class="animated-background mt-2" *ngFor="let item of [].constructor(5)" style="min-height: 15px;">
+        </div>
+        <div class="animated-background" style="height: 30px">
+        </div>
+        <div class="animated-background" *ngFor="let item of [].constructor(4)" style="min-height: 15px;">
+        </div>
+      </ng-container>
+
+      <div *ngIf="!RolessData.length && !No_Details1">NO DATA AVAILABLE...!</div>
+
+      <div class="responsiveTable" *ngIf="RolessData.length && !No_Details1">
+        <table datatable [dtOptions]="CF.dtOption_Excel">
+          <thead>
+            <tr>
+              <th>Sno</th>
+              <th>Role Name</th>
+              <th>Description</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of RolessData; let i=index">
+              <td>{{i+1}}</td>
+              <td>{{item.rolename}}</td>
+              <td></td>
+              <td>
+                <button type="button" class="btn btn-primary" (click)="Edit_Roles(item)">Edit</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================  ROLE FORM ================================ -->
+
+<section id="roles_add" *ngIf="!Hide_Table1">
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <h4 class="m-b-20 m-t-2" *ngIf="!Edit_Role_Data">Role Registration</h4>
+          <h4 class="m-b-20 m-t-2" *ngIf="Edit_Role_Data">Update Role</h4>
+
+        </div>
+
+        <div class="col-md-6">
+          <div class="col-md-12 form-group text-end">
+            <button type="submit" class="btn btn-danger" (click)="Back_Roles()"> Back</button>
+          </div>
+        </div>
+      </div>
+
+      <form [formGroup]="Roles_Form">
+        <div class="row">
+
+          <div class="col-md-4 form-group">
+            <label class="col-form-label required">Name of Role</label>
+            <input type="text" class="form-control" formControlName="rolename" placeholder="Role Name">
+            <div class="invalid_feedback">
+              <div *ngIf="Submitted1 && Roles_Form.get('rolename')!.hasError('required')">Role Name is required
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 form-group">
+            <label class="col-form-label required">Status</label>
+            <ng-multiselect-dropdown [settings]="CF.SDDL" formControlName="status" [data]="Roles_Status1"
+              [placeholder]="'Status'" formControlName="status">
+            </ng-multiselect-dropdown>
+            <!-- <angular2-multiselect class="form-control" formControlName="status" [data]="Roles_Status1"
+                [settings]="CF.placeholder(CF.SDDL, {text: 'Status'})">
+                <c-badge>
+                  <ng-template let-item="item">
+                    <label>{{item.type}}
+                    </label>
+                  </ng-template>
+                </c-badge>
+                <c-item>
+                  <ng-template let-item="item">
+                    <label class="cursor">{{item.type}}
+                    </label>
+                  </ng-template>
+                </c-item>
+              </angular2-multiselect> -->
+            <div class="invalid_feedback" *ngIf="Submitted1 && Roles_Form.get('status')!.hasError('required')">
+              Status is required
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-8 form-group">
+            <label class="col-form-label required">Description</label>
+            <textarea class="form-control" formControlName="Description" placeholder="Description"></textarea>
+            <div class="invalid_feedback">
+              <div *ngIf="Submitted1 && Roles_Form.get('Description')!.hasError('required')">Description is required
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </form>
+
+      <label class="col-form-label required">Access</label>
+
+      <!-- <ng-container *ngFor="let item of Menu_Data;let k = index">
+
+          <div class="row Access  mt-3">
+            <div class="col-sm-2">
+              <p>{{item.menuname}}</p>
+            </div>
+            <div class="col-sm-10">
+              <ul>
+                <li [ngClass]="item.AccessStatus.ViewFlag == true ? 'Active':''"
+                  (click)="item.AccessStatus.ViewFlag = !item.AccessStatus.ViewFlag">View</li>
+                <li [ngClass]="item.AccessStatus.CreateFlag == true ? 'Active':''"
+                  (click)="item.AccessStatus.CreateFlag = !item.AccessStatus.CreateFlag">Create</li>
+                <li [ngClass]="item.AccessStatus.EditFlag == true ? 'Active':''"
+                  (click)="item.AccessStatus.EditFlag = !item.AccessStatus.EditFlag">Edit</li>
+                <li [ngClass]="item.AccessStatus.DeleteFlag == true ? 'Active':''"
+                  (click)="item.AccessStatus.DeleteFlag = !item.AccessStatus.DeleteFlag">Delete</li>
+              </ul>
+
+            </div>
+
+
+          </div>
+        </ng-container> -->
+
+      <ng-container *ngFor="let item of menuItems,let i =index">
+
+        <div class="row Access">
+          <div class="col-sm-3">
+            <!-- <input type="checkbox" [(ngModel)]="menuItems[i].status"> -->
+            <p>{{i+1}}.&nbsp;{{item.menuname}}</p>
+          </div>
+          <div class="col-sm-10">
+            <ul>
+              <!-- <li *ngFor="let action of item.Menuevents" [ngClass]="action.status == 1 ? 'Active':''"
+                  (click)="action.status == 1 ? action.status = 0 : action.status = 1;ChangeStatus(i,'','')">{{action.menueventname}}</li> -->
+              <li *ngFor="let action of item.Menuevents" for="action.menueventname"
+                (click)="action.status == 1 ? action.status = 0 : action.status = 1;ChangeStatus1(i)"> <input
+                  type="checkbox" [(ngModel)]="action.status" name="action.menueventname">
+                <span>{{action.menueventname}}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <ng-container *ngFor="let sub of item.submenu;let k=index">
+          <div class="row AccessSub">
+            <div class="col-sm-2">
+              <!-- <input type="checkbox" [(ngModel)]="item.submenu[k].status"> -->
+              <p>{{k+1}}.&nbsp;{{sub.menuname}}</p>
+            </div>
+
+            <div class="col-sm-10">
+              <ul>
+                <!-- <li *ngFor="let action of sub.Menuevents;let j =index" [ngClass]="action.status == 1 ? 'Active':''"
+                  (click)="action.status == 1 ? action.status = 0 : action.status = 1;ChangeStatus(i,k,j)" >{{action.menueventname}}</li> -->
+                <li *ngFor="let action of sub.Menuevents;let j =index" for="action.menueventname"
+                  (click)="action.status == 1 ? action.status = 0 : action.status = 1;ChangeStatus(i,k,j)"><input
+                    type="checkbox" [(ngModel)]="action.status"
+                    name="action.menueventname"><span>{{action.menueventname}}</span></li>
+
+              </ul>
+
+            </div>
+          </div>
+
+        </ng-container>
+
+
+
+      </ng-container>
+
+      <div class="col-md-12 text-left mt-2">
+        <button type="submit" class="btn btn-primary btnWidth " [ngClass]="{'button--loading':Btn_Loader1}"
+          (click)="On_Submit1()" *ngIf="!Edit_Role_Data"><span>SAVE</span></button>
+        <button type="submit" class="btn btn-primary btnWidth " [ngClass]="{'button--loading':Btn_Loader1}"
+          (click)="On_Update1()" *ngIf="Edit_Role_Data"><span>Update</span></button>
+      </div>
+    </div>
+  </div>
+</section>

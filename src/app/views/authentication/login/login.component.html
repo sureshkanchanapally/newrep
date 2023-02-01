@@ -1,0 +1,128 @@
+<!-- <div class="row w-100 mx-0 auth-page">
+  <div class="col-md-4 col-xl-4 mx-auto">
+    <div class="card box_shadow">
+      <div class="row">
+
+        <div class="col-md-12 ps-md-0">
+          <div class="auth-form-wrapper p-5">
+            <div class="text-center mb-3">
+              <h2 class="m-b-20 signin"> Welcome..! </h2>
+              <p style="font-size: 17px; font-weight: 600; margin-bottom: 0px;
+                            color: #4061c0;margin-top: 10px;">ASTRO</p>
+            </div>
+
+            <form class="forms-sample" [formGroup]="loginform">
+              <ng-container *ngIf="!OTP_View">
+                <div class="mb-3">
+                  <input type="text" class="form-control" placeholder="Mobile Number" formControlName="mobileno"
+                    autofocus [readonly]="Mobile_Read" (keyup)="Allow_Only('[^0-9]','mobileno')">
+                  <div class="invalid_feedback  pl-1 mt-0 mb-2">
+                    <i class="show_password icon icon-Pencil" (click)="Edit_Mobile()" *ngIf="Edit_Mob"></i>
+                    <div *ngIf="Submitted && loginform.get('mobileno').hasError('required')">Mobile Number is required
+                    </div>
+                    <div *ngIf="Submitted && loginform.get('mobileno').hasError('pattern')"> invalid mobile </div>
+                  </div>
+                </div>
+              </ng-container>
+
+              <div class="form-group mb-3" *ngIf="OTP_View">
+                <label class="form-label">Enter OTP</label>
+                <ngx-otp-input [config]="otpInputConfig" (otpChange)="otpChange($event)"
+                  (fill)="fill($event)"></ngx-otp-input>
+              </div>
+
+              <div class="mb-3" *ngIf="!OTP_View">
+                <input type="checkbox" class="form-check-input" id="authCheck" checked> &nbsp;
+                <label class="form-check-label" for="authCheck">
+                  I agree to all <a class="anchor">terms and conditions</a>
+                </label>
+              </div>
+
+              <div class="text-center">
+                <div class="col-xs-12 p-b-20 d-grid">
+                  <button type="submit" class="btn btn-primary mb-2 mb-md-0" *ngIf="!OTP_View"
+                    [ngClass]="{'button--loading':loginvalid}" (click)="onSubmit()"><span>Next </span></button>
+                  <button type="submit" class="btn btn-primary mb-2 mb-md-0" *ngIf="OTP_View"
+                    [disabled]="OTPValue.length!= 4" [ngClass]="{'button--loading':OTPvalid}"
+                    (click)="Verify_Otp()"><span>Verify OTP </span></button>
+                </div>
+              </div>
+
+              <div class="mb-3" *ngIf="OTP_View">
+                <div class="form-check-">
+                  <label class="form-check-label mt-3" for="checkbox-signin" style="margin-left: 5px;font-size: 13px;"
+                    i18n>Didn't receive any OTP? <a class="anchor">Resend new code</a></label>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="auth-wrapper d-flex no-block justify-content-center align-items-center"
+  style="background: linear-gradient(to bottom right, #4061c0 0%, #5bbf95 100%);" id="particles-js">
+  <div class="auth-box" style="position: fixed">
+    <div id="loginform">
+
+      <div class="text-center mb-3">
+        <h2 class="m-b-20 signin"> Welcome..! </h2>
+        <p class="logo-text">ASTRO</p>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <form class="form-horizontal m-t-20" id="loginform" [formGroup]="loginform">
+            <ng-container *ngIf="!OTP_View">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Mobile Number" formControlName="mobileno" autofocus
+                  [readonly]="Mobile_Read" (keyup)="Allow_Only('[^0-9]','mobileno')">
+                <div class="invalid_feedback  pl-1 mt-0 mb-2">
+                  <i class="show_password icon icon-Pencil" (click)="Edit_Mobile()" *ngIf="Edit_Mob"></i>
+                  <div *ngIf="Submitted && loginform.get('mobileno').hasError('required')">Mobile Number is required
+                  </div>
+                  <div *ngIf="Submitted && loginform.get('mobileno').hasError('pattern')"> invalid mobile </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <div class="form-group mb-3" *ngIf="OTP_View">
+              <label>Enter OTP</label>
+              <ngx-otp-input [config]="otpInputConfig" (otpChange)="otpChange($event)"
+                (fill)="fill($event)"></ngx-otp-input>
+            </div>
+
+            <div class="mb-3 mt-3" *ngIf="!OTP_View">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="checkbox-signin" style="height: 18px; width: 18px;"
+                  checked>
+                <label class="form-check-label" for="checkbox-signin" style="margin-left: 5px;font-size: 15px;" i18n>I
+                  agree to all <a>terms and conditions</a></label>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <div class="col-xs-12 p-b-20 d-grid">
+                <button type="submit" class="btn btn-primary mb-2 mb-md-0" *ngIf="!OTP_View"
+                  [ngClass]="{'button--loading':loginvalid}" (click)="onSubmit()"><span>Next </span></button>
+                <button type="submit" class="btn btn-primary mb-2 mb-md-0" *ngIf="OTP_View"
+                  [disabled]="OTPValue.length!= 4" [ngClass]="{'button--loading':OTPvalid}"
+                  (click)="Verify_Otp()"><span>Verify OTP </span></button>
+              </div>
+            </div>
+
+            <div class="mb-3" *ngIf="OTP_View">
+              <div class="form-check- text-center mt-2">
+                <label class="form-check-label- mt-2" for="checkbox-signin" i18n>Didn't receive any OTP? <a>Resend new code</a></label>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,68 @@
+// Write your custom css/scss here
+
+// ------------------------------------- card -------------------------------------
+.card {
+  box-shadow: rgb(0 0 0 / 10%) 0px 20px 25px -5px, rgb(0 0 0 / 4%) 0px 10px 10px -5px;
+}
+
+// --------------------------------------- Buttons --------------------------------
+
+.btn-primary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #3759B9;
+  --bs-btn-border-color: #3759B9;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #3759B9;
+  --bs-btn-hover-border-color: #3759B9;
+  --bs-btn-focus-shadow-rgb: 124, 134, 255;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #3759B9;
+  --bs-btn-active-border-color: #3759B9;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #3759B9;
+  --bs-btn-disabled-border-color: #3759B9;
+}
+
+.btn-danger {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #dc3545;
+  --bs-btn-border-color: #ff3366;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #d92b57;
+  --bs-btn-hover-border-color: #cc2952;
+  --bs-btn-focus-shadow-rgb: 255, 82, 125;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #cc2952;
+  --bs-btn-active-border-color: #bf264d;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #ff3366;
+  --bs-btn-disabled-border-color: #ff3366;
+}
+
+.btn:hover {
+  color: var(--bs-btn-hover-color);
+  background-color: var(--bs-btn-hover-bg);
+  border-color: var(--bs-btn-hover-border-color);
+}
+
+// --------------------------------------- Inputs Boarders --------------------------------
+input,
+textarea {
+  border: 1px solid #ccc !important;
+
+  &:focus {
+    outline: none !important;
+    border-color: #3759B9 !important;
+  }
+}
+
+a.anchor:hover {
+  color: #3759B9 !important;
+}
+
+.form-check-input:checked {
+  background-color: #3759b9;
+  border-color: #3759b9;
+}

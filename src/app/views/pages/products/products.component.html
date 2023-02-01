@@ -1,0 +1,644 @@
+<div class="content__loader" *ngIf="loader">
+  <div><i class="Favicon"></i></div>
+</div>
+
+
+<div *ngIf="Step1">
+  <!-- ================================== REGISTRATION FORM =============================== -->
+  <section id="OrderRegistrationForm" *ngIf="Step1 && Step1Regform">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h4 class="m-b-20 m-t-20">Order registration</h4>
+          </div>
+          <div class="col-md-6 form-group text-right mt-4">
+            <button class="button" class="btn btn-danger" routerLink='/products-details'> <i class="fa fa-backward"></i>
+              Back</button>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-5">
+            <h6 class="m-b-10 m-t-10">Order Details</h6>
+          </div>
+
+        </div>
+
+        <form [formGroup]="OrderRegistrationForm">
+          <div class="row">
+            <div class="col-md-4 form-group mt-2">
+              <label class="col-form-label required">Purchase Order Number</label>
+              <input class="form-control" formControlName="PO_Number" placeholder="Purchase Order Number">
+              <div class="invalid_feedback"
+                *ngIf="Submitted &&OrderRegistrationForm.get('PO_Number')!.hasError('required')">
+                PO Number Name is required
+              </div>
+            </div>
+            <div class="col-md-4 form-group mt-2">
+              <label class="col-form-label required">Customer</label>
+              <!-- <select class="form-control" formControlName="Customer">
+                      <option>Customer1</option>
+                      <option>Customer2</option>
+                      <option>Customer3</option>
+                      <option>Customer4</option>
+                    </select>
+                    <div class="invalid_feedback"
+                      *ngIf="Submitted &&OrderRegistrationForm.get('Customer')!.hasError('required')">
+                      Customer Name is required
+                    </div> -->
+              <!-- <angular2-multiselect class="form-control" formControlName="Customer" [data]="Customer_Data"
+                [settings]="CF.placeholder(CF.SDDL, {text: 'Customer'})">
+                <c-badge>
+                  <ng-template let-item="item">
+                    <label>{{item.type }}
+                    </label>
+                  </ng-template>
+                </c-badge>
+                <c-item>
+                  <ng-template let-item="item">
+                    <label class="cursor">{{item.type}}
+                    </label>
+                  </ng-template>
+                </c-item>
+              </angular2-multiselect> -->
+              <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="Customer_Data" [placeholder]="'Select Role'"
+              formControlName="Customer">
+            </ng-multiselect-dropdown>
+              <div class="invalid_feedback"
+                *ngIf="Submitted &&OrderRegistrationForm.get('Customer')!.hasError('required')">
+                Customer Name is required
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 form-group mt-2">
+              <label class="col-form-label required">Issue date</label>
+              <input class="form-control" type="date" formControlName="Issue_date">
+              <div class="invalid_feedback"
+                *ngIf="Submitted &&OrderRegistrationForm.get('Issue_date')!.hasError('required')">
+                Issue date Name is required
+              </div>
+            </div>
+
+            <div class="col-md-4 form-group mt-2">
+              <label class="col-form-label required">Ship date</label>
+              <input class="form-control" type="date" formControlName="Ship_date">
+              <div class="invalid_feedback"
+                *ngIf="Submitted &&OrderRegistrationForm.get('Ship_date')!.hasError('required')">
+                Ship date Name is required
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 form-group mt-2">
+              <label class="col-form-label required">No.of Products</label>
+              <input class="form-control" formControlName="No_of_Products" placeholder="No.of Products" >
+              <div class="invalid_feedback"
+                *ngIf="Submitted &&OrderRegistrationForm.get('No_of_Products')!.hasError('required')">
+                Number Of Products is required
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-12 text-right  mt-3">
+            <button class="btn btn-primary btnWidth" (click)="on_SubRegistration()"><span> Next
+              </span></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================= PRODUCTS ==================================== -->
+
+  <section id="PRODUCTS" *ngIf="Step1 && Step1Products">
+
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h4 class="m-b-20 m-t-20">New order registration</h4>
+          </div>
+          <div class="col-md-6 form-group text-right mt-4">
+            <button class="button" class="btn btn-danger" (click)="onBack('Step1Products')"> <i
+                class="fa fa-backward"></i> Back</button>
+          </div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-md-5">
+            <h6 class="m-b-10 m-t-10">Products</h6>
+          </div>
+        </div>
+
+        <div class="row">
+          <ng-container *ngFor="let item of Products;let i=index">
+            <div class="col-sm-2">
+              <div class="product-card card-hover" (click)="on_SubAddProduct(i);StepperStatusChecker()">
+                <div class="product-tumb">
+                  <h3 *ngIf="item.Product.length">{{item.Product[0].name}}</h3>
+                </div>
+                <div class="product-bottom-details">
+                  <div class="product-links">
+                    <p><i class="fa fa-plus"></i>&nbsp; Add Details</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="col-sm-12 text-right mt-3">
+          <button class="btn btn-primary btnWidth" [disabled]="InsertDisabled" (click)="insert_Order()"><span> Next
+            </span></button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================ Product Details ===================================== -->
+
+
+  <section id="ProdctDetails" *ngIf="Step1 && Step1ProductsDetails">
+
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h4 class="m-b-20 m-t-20">Product details</h4>
+          </div>
+
+          <div class="col-md-6">
+            <div class="col-md-12 form-group text-right mt-4">
+              <button class="button" class="btn btn-danger" (click)="onBack('Step1ProductsDetails')"> <i
+                  class="fa fa-backward"></i> Back</button>
+            </div>
+          </div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-md-5">
+            <h6 class="m-b-5 m-t-5">Select the type of the product</h6>
+          </div>
+          <div class="col-md-7 stepper">
+            <ul>
+              <li (click)="onNavigate('ProductStatus')">
+                <p>Product</p>
+                <div [ngClass]="ProductStatus ? 'StepperItemActive':'StepperItem'" class="StepperItem"></div>
+              </li>
+              <li (click)="onNavigate('PackStatus')">
+                <p>Packing</p>
+                <div [ngClass]="PackStatus ? 'StepperItemActive':'StepperItem'" class="StepperItem"></div>
+              </li>
+              <li (click)="onNavigate('CartonStatus')">
+                <p>Carton</p>
+                <div [ngClass]="CartonStatus ? 'StepperItemActive':'StepperItem'" class="StepperItem"></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ================================ Product Binding ===================================== -->
+
+        <div class="row">
+          <div class="col-sm-2" *ngFor="let item of products_Info;let i=index">
+            <div class="product-card card-hover" (click)="selected_P = item.id">
+              <div [ngClass]="{'product-tum-Active': selected_P == item.id, 'product-tum' : selected_P != item.id}">
+                <p>{{item.name}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-12 text-right mt-3">
+          <button class="btn btn-primary btnWidth" [disabled]="selected_P == ''"
+            (click)="on_SelectProduct();StepperStatusChecker()"><span>
+              Next </span></button>
+        </div>
+
+      </div>
+
+
+    </div>
+  </section>
+
+  <!-- ================================ Prodct Info ===================================== -->
+
+
+  <section id="ProdctInfo" *ngIf="Step1 && Step1ProductInfo">
+
+    <div class="card">
+
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h4 class="m-b-20 m-t-20">Product details</h4>
+          </div>
+
+          <div class="col-md-6">
+            <div class="col-md-12 form-group text-right mt-4">
+              <button class="button" class="btn btn-danger" (click)="onBack('Step1ProductInfo')"> <i
+                  class="fa fa-backward"></i> Back</button>
+            </div>
+          </div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-md-5">
+            <h6 class="m-b-5 m-t-5"></h6>
+          </div>
+          <div class="col-md-7 stepper">
+            <ul>
+              <li (click)="onNavigate('ProductStatus')">
+                <p>Product</p>
+                <div [ngClass]="ProductStatus ? 'StepperItemActive':'StepperItem'" class="StepperItem"></div>
+              </li>
+              <li (click)="onNavigate('PackStatus')">
+                <p>Packing</p>
+                <div [ngClass]="PackStatus ? 'StepperItemActive':'StepperItem'" class="StepperItem"></div>
+              </li>
+              <li (click)="onNavigate('CartonStatus')">
+                <p>Carton</p>
+                <div [ngClass]="CartonStatus ? 'StepperItemActive':'StepperItem'" class="StepperItem"></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ================================ Product Info ===================================== -->
+        <form [formGroup]=" ProductInfoForm">
+
+          <div class="row">
+            <div class="col-md-3 form-group mt-2">
+              <label class="col-form-label required">Name</label>
+              <input class="form-control" formControlName="Name" placeholder="Name">
+              <div class="invalid_feedback"
+                *ngIf="ProductInfoSubmitted && ProductInfoForm.get('Name')!.hasError('required')">
+                Name is required
+              </div>
+            </div>
+            <div class="col-md-3 form-group mt-2">
+              <label class="col-form-label required">SKU</label>
+              <input class="form-control" formControlName="SKU" placeholder="SKU">
+              <div class="invalid_feedback"
+                *ngIf="ProductInfoSubmitted && ProductInfoForm.get('SKU')!.hasError('required')">
+                SKU is required
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 form-group mt-2">
+              <label class="col-form-label required">Size</label>
+              <input class="form-control" type="text" formControlName="Size" placeholder="Size">
+              <div class="invalid_feedback"
+                *ngIf="ProductInfoSubmitted && ProductInfoForm.get('Size')!.hasError('required')">
+                Size is required
+              </div>
+            </div>
+            <div class="col-md-3 form-group mt-2">
+              <label class="col-form-label required">Fabric</label>
+              <!-- <input class="form-control" type="text" formControlName="Fabric"> -->
+              <select class="form-control" formControlName="Fabric">
+                <option>Wool</option>
+                <option>Cotton</option>
+                <option>Silk</option>
+                <option>Other</option>
+              </select>
+              <div class="invalid_feedback"
+                *ngIf="ProductInfoSubmitted && ProductInfoForm.get('Fabric')!.hasError('required')">
+                Fabric is required
+              </div>
+            </div>
+            <div class="col-md-3 form-group mt-2">
+              <label class="col-form-label required">Color</label>
+              <input class="form-control" formControlName="Color" placeholder="Color">
+              <div class="invalid_feedback"
+                *ngIf="ProductInfoSubmitted && ProductInfoForm.get('Color')!.hasError('required')">
+                Color is required
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 form-group mt-2">
+              <label class="col-form-label required">Lot size</label>
+              <input class="form-control" formControlName="Lotsize" placeholder="Lot Size">
+              <div class="invalid_feedback"
+                *ngIf="ProductInfoSubmitted && ProductInfoForm.get('Lotsize')!.hasError('required')">
+                Lot size is required
+              </div>
+            </div>
+
+            <div class="col-md-3 form-group mt-2">
+              <label class="col-form-label required">AQL</label>
+              <input class="form-control" formControlName="AQL" placeholder="AQL">
+              <div class="invalid_feedback"
+                *ngIf="ProductInfoSubmitted && ProductInfoForm.get('AQL')!.hasError('required')">
+                AQL is required
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <h6 class="m-b-10 m-t-10">Upload photos of pre-production samples</h6>
+            </div>
+          </div>
+
+          <ng-container *ngFor="let item of Product_Images_Info">
+            <ng-container>
+              <div class="progress mb-3" *ngIf="(progress | async) as per" style="height: 10px;">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="00" aria-valuemin="0"
+                  aria-valuemax="100" [ngStyle]="{'width' : per+'%'}">
+                  <span class="sr-only">{{per}}% Complete</span>
+                </div>
+              </div>
+            </ng-container>
+            <button type="button" (click)="onClick_img()" class="btn btn-outline-info mt-4 uploadBTN"
+                            [ngClass]="{'button--loading':uploadingloading}">
+                            <i class="fas fa-arrow-up" style="font-size: 28px;"></i>
+                            <span>{{item.productimgtype}}</span>
+                        </button>
+                        <input type="file" #fileUpload accept="" style="display:none;" />
+
+            <!-- <div class="col-md-4 form-group mt-2">
+              <ng-container>
+                <div class="progress mb-3" *ngIf="(progress | async) as per" style="height: 10px;">
+                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="00" aria-valuemin="0"
+                    aria-valuemax="100" [ngStyle]="{'width' : per+'%'}">
+                    <span class="sr-only">{{per}}% Complete</span>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container>
+                <div class="mt-4" id="file_btn">
+                  <i class="uil-file-upload icon_ cursor" (click)="onClick_img()">
+                    <span class="uplaode_img">
+                      <label class="col-form-label required">Upload Supporting Document</label>
+                    </span>
+                  </i>
+                </div>
+              </ng-container>
+              <input type="file" #fileUpload accept="image/jpeg, image/png" style="display:none;" />
+              <div class="d-inline-block card m-1" *ngIf="Temp_ImgUr">
+                            <div class="card-body p-2">
+                              <a [href]="CF.Img_Service_Url+ '/' + Temp_ImgUr" target="_blank">
+                                <img [src]="CF.Img_Service_Url+ '/' + Temp_ImgUr" class="img-fluid" width="100"
+                                  style="object-fit: contain;">
+                              </a>
+                              <div class="position-absolute remove" (click)="RemoveImg(Temp_ImgUr)">X</div>
+                            </div>
+                          </div>
+              <div class="invalid_feedback" *ngIf="submitted && Temp_ImgUr == null">
+                            Upload Invoice is required
+                          </div>
+            </div> -->
+          </ng-container>
+
+
+          <div class="col-sm-12 text-right mt-4">
+            <button class="btn btn-primary1 btnWidth" (click)="on_SubProductinfo();StepperStatusChecker()">
+              <span> Enter Packing Details </span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<div *ngIf="Step2">
+
+  <!-- ================================ Packing   ===================================== -->
+
+
+  <section id="Packing" *ngIf="Step2 && Step2Packing">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h4 class="m-b-20 m-t-20">Packing details</h4>
+          </div>
+
+          <div class="col-md-6">
+            <div class="col-md-12 form-group text-right mt-4">
+              <button class="button" class="btn btn-danger" (click)="onBack('Step2Packing')"> <i
+                  class="fa fa-backward"></i> Back</button>
+            </div>
+          </div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-md-5">
+            <h6 class="m-b-5 m-t-5"></h6>
+          </div>
+          <div class="col-md-7 stepper">
+            <ul>
+              <li (click)="onNavigate('ProductStatus')">
+                <p>Product</p>
+                <div [ngClass]="ProductStatus ? 'StepperItemActive':'StepperItem'" class="StepperItem"></div>
+              </li>
+              <li (click)="onNavigate('PackStatus')">
+                <p>Packing</p>
+                <div [ngClass]="PackStatus ? 'StepperItemActive':'StepperItem'" class="StepperItem"></div>
+              </li>
+              <li (click)="onNavigate('CartonStatus')">
+                <p>Carton</p>
+                <div [ngClass]="CartonStatus ? 'StepperItemActive':'StepperItem'" class="StepperItem"></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <form [formGroup]=" PackingForm">
+          <div class="row">
+            <div class="col-md-3 form-group mt-2">
+              <label class="col-form-label required">Packing material</label>
+              <!-- <input class="form-control" formControlName="Packingmaterial"> -->
+              <select class="form-control" formControlName="Packingmaterial">
+                <option value="none" selected disabled hidden>Select</option>
+                <option>Paper</option>
+                <option>Other</option>
+              </select>
+              <div class="invalid_feedback"
+                *ngIf="PackingSubmitted && PackingForm.get('Packingmaterial')!.hasError('required')">
+                Packing material is required
+              </div>
+            </div>
+            <div class="col-md-3 form-group mt-2">
+              <label class="col-form-label required">Dimension</label>
+              <!-- <input class="form-control" formControlName="Dimension"> -->
+              <select class="form-control" formControlName="Dimension">
+                <option>Select</option>
+                <option>Custom</option>
+              </select>
+              <div class="invalid_feedback"
+                *ngIf="PackingSubmitted && PackingForm.get('Dimension')!.hasError('required')">
+                Dimension is required
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <h6 class="m-b-10 m-t-10">Upload photos of pre-production samples</h6>
+            </div>
+          </div>
+
+          <ng-container *ngFor="let item of Packing_Images_Info">
+            <button type="button" (click)="onClick()" class="btn btn-outline-info mt-4 uploadBTN"
+              [ngClass]="{'button--loading':uploadingloading}">
+              <i class="fas fa-arrow-up" style="font-size: 28px;"></i>
+              <span>{{item.packingimgtype}}</span>
+            </button>
+            <input type="file" #fileUpload accept="" style="display:none;" />
+          </ng-container>
+
+          <div class="col-sm-12 text-right mt-4">
+            <button class="btn btn-primary btnWidth" (click)="on_SubPacking();StepperStatusChecker()"><span> Enter
+                carton details
+              </span></button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+
+    </div>
+  </section>
+
+  <!-- ================================ Carton   ===================================== -->
+
+  <section id="Carton" *ngIf="Step2 && Step2Carton">
+
+    <div class="card">
+
+
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h4 class="m-b-20 m-t-20">Carton details</h4>
+          </div>
+
+          <div class="col-md-6">
+            <div class="col-md-12 form-group text-right mt-4">
+              <button class="button" class="btn btn-danger" (click)="onBack('Step2Carton')"> <i
+                  class="fa fa-backward"></i> Back</button>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-5">
+            <h6 class="m-b-5 m-t-5"></h6>
+          </div>
+          <div class="col-md-7 stepper">
+            <ul>
+              <li (click)="onNavigate('ProductStatus')">
+                <p>Product</p>
+                <div [ngClass]="ProductStatus ? 'StepperItemActive':'StepperItem'" class="StepperItem"></div>
+              </li>
+              <li (click)="onNavigate('PackStatus')">
+                <p>Packing</p>
+                <div [ngClass]="PackStatus ? 'StepperItemActive':'StepperItem'" class="StepperItem"></div>
+              </li>
+              <li (click)="onNavigate('CartonStatus')">
+                <p>Carton</p>
+                <div [ngClass]="CartonStatus ? 'StepperItemActive':'StepperItem'" class="StepperItem"></div>
+              </li>
+            </ul>
+          </div>
+
+
+        </div>
+
+
+
+
+        <form [formGroup]=" CartonForm">
+          <div class="row">
+            <div class="col-md-3 form-group mt-2">
+              <label class="col-form-label required">Carton type</label>
+              <!-- <input class="form-control" formControlName=""> -->
+              <select class="form-control" formControlName="Cartontype">
+                <option>Select</option>
+                <option>Small</option>
+                <option>Large</option>
+
+              </select>
+              <div class="invalid_feedback"
+                *ngIf="CartonSubmitted && CartonForm.get('Cartontype')!.hasError('required')">
+                Carton type is required
+              </div>
+            </div>
+            <div class="col-md-3 form-group mt-2">
+              <label class="col-form-label required">Dimension</label>
+              <!-- <input class="form-control" formControlName="CartonDimension"> -->
+              <select class="form-control" formControlName="CartonDimension">
+                <option>Select</option>
+                <option>Custom</option>
+              </select>
+              <div class="invalid_feedback"
+                *ngIf="CartonSubmitted && CartonForm.get('CartonDimension')!.hasError('required')">
+                Dimension is required
+              </div>
+            </div>
+            <div class="col-md-3 form-group mt-2">
+              <label class="col-form-label required">Number of packages</label>
+              <input class="form-control" formControlName="Numberofpackages">
+              <div class="invalid_feedback"
+                *ngIf="CartonSubmitted && CartonForm.get('Numberofpackages')!.hasError('required')">
+                Number of packages is required
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <h6 class="m-b-10 m-t-10">Upload photos of pre-production samples</h6>
+            </div>
+          </div>
+
+          <ng-container *ngFor="let item of Carton_Images_Info">
+            <button type="button" (click)="onClick()" class="btn btn-outline-info mt-4 uploadBTN"
+              [ngClass]="{'button--loading':uploadingloading}">
+              <i class="fas fa-arrow-up" style="font-size: 28px;"></i>
+              <span>{{item.cartonimgtype}}</span>
+            </button>
+            <input type="file" #fileUpload accept="" style="display:none;" />
+          </ng-container>
+
+
+          <div class="col-sm-12 text-right mt-4">
+            <button class="btn btn-primary btnWidth" (click)="on_SubCarton();StepperStatusChecker()"><span> Next
+              </span></button>
+
+          </div>
+
+
+
+
+        </form>
+
+
+      </div>
+
+
+    </div>
+  </section>
+
+
+
+
+</div>

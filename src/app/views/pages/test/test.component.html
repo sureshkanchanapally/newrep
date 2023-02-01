@@ -1,0 +1,181 @@
+<section class="breadcrumb">
+  <nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><b style="font-size: 20px;">Test</b></li>
+      <!-- <li class="breadcrumb-item active" aria-current="page">Data table</li> -->
+    </ol>
+  </nav>
+</section>
+
+<section id="calendar" *ngIf="!Product_Select">
+  <div class="card">
+    <div class="card-body">
+      <full-calendar [options]="calendarOptions"></full-calendar>
+    </div>
+  </div>
+</section>
+
+<section id="test_register" *ngIf="Product_Select">
+  <div class="card">
+    <div class="card-body">
+      <div class="col-lg-12 mb-3">
+        <h3> Test Registration </h3>
+      </div>
+      <div class="row">
+
+        <div class="col-lg-8">
+          <div class="row d-flex flex-row m-t-0">
+            <div class="col-md-5 p-2">
+              <img alt="user" class="img-fluid" [src]="Product_Select.Imgurl" [alt]="Product_Select.productName"
+                onerror="this.src='assets/images/540-540.jpg'">
+            </div>
+
+            <div class="col-md-7 p-2">
+              <div class="table-responsive">
+                <table class="table table-borderless mb-0 text-muted">
+                  <tbody>
+                    <tr>
+                      <th scope="row"> Product Id : </th>
+                      <td>{{Product_Select.productid}}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"> SKU : </th>
+                      <td>{{Product_Select.sku}}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"> Order Id : </th>
+                      <td>{{Product_Select.Orderid}}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"> Brand : </th>
+                      <td>{{Product_Select.Brand}}</td>
+                    </tr>
+
+                    <ng-container *ngIf="Product_Select.PackingDetails?.length">
+                      <tr>
+                        <th scope="row"> Packing Material : </th>
+                        <td>{{Product_Select.PackingDetails[0].packingmaterial}}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row"> Size : </th>
+                        <td>{{Product_Select.PackingDetails[0].dimension}}</td>
+                      </tr>
+                    </ng-container>
+
+                    <ng-container *ngIf="Product_Select.Cartondetails?.length">
+                      <tr>
+                        <th scope="row"> Carton Material : </th>
+                        <td>{{Product_Select.Cartondetails[0].cartontype}}</td>
+                      </tr>
+
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+
+          <!-- <div class="table-responsive" *ngIf="Tester_Details">
+            <table class="table table-borderless mb-0 text-muted">
+              <tbody>
+                <tr>
+                  <th scope="row"> Tester Name : </th>
+                  <td>{{Tester_Details.Tester_Name}}</td>
+                </tr>
+                <tr>
+                  <th scope="row"> Date : </th>
+                  <td>{{Tester_Details.Tester_date}}</td>
+                </tr>
+                <tr>
+                  <th scope="row"> Time : </th>
+                  <td>{{Tester_Details.Tester_time}}</td>
+                </tr>
+                <tr>
+                  <th scope="row"> Comment : </th>
+                  <td>{{Tester_Details.Tester_comments}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="col-md-12 text-center mt-4">
+              <button type="submit" class="btn waves-effect waves-light btn-block btn-primary"
+                [ngClass]="{'button--loading':Btn_Valid}" (click)="On_Ticket_Submit('Test_Details')"><span>Next</span></button>
+            </div>
+          </div> -->
+
+          <ng-container>
+            <form [formGroup]="Test_Register_Form">
+
+              <div class="col-md-12 mt-4 form-group my__validStar error_found">
+                <label class="col-form-label required">Tester Name</label>
+                <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="Testers_Data" [placeholder]="'Select Role'"
+                  formControlName="Tester_Name">
+                </ng-multiselect-dropdown>
+                <!-- <angular2-multiselect class="form-control" formControlName="Tester_Name"
+                  [data]="Testers_Data" [settings]="CF.placeholder(CF.SDDL, {text: 'Select'})">
+                  <c-badge>
+                    <ng-template let-item="item">
+                      <label>{{item.type }}
+                      </label>
+                    </ng-template>
+                  </c-badge>
+                  <c-item>
+                    <ng-template let-item="item">
+                      <label class="cursor">{{item.type}}
+                      </label>
+                    </ng-template>
+                  </c-item>
+                </angular2-multiselect> -->
+                <div class="invalid_feedback">
+                  <div *ngIf="Submitted && Test_Register_Form.get('Tester_Name').hasError('required')">Enter Tester Name
+                    is required
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 form-group mb-3">
+                <label class="col-form-label required">Date</label>
+                <input type="datetime-local" class="form-control" formControlName="Tester_date">
+                <div class="invalid_feedback">
+                  <div *ngIf="Submitted && Test_Register_Form.get('Tester_date').hasError('required')">Enter Date
+                    is required
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="col-md-12 form-group">
+                <label class="col-form-label required">Time</label>
+                <input type="time" class="form-control" formControlName="Tester_time">
+                <div class="invalid_feedback">
+                  <div *ngIf="Submitted && Test_Register_Form.get('Tester_time').hasError('required')">Enter Time
+                    is required
+                  </div>
+                </div>
+              </div> -->
+
+              <div class="col-md-12 form-group">
+                <label class="col-form-label required">Additional Comment</label>
+                <textarea class="form-control" formControlName="Tester_comments" placeholder="Comments"></textarea>
+                <div class="invalid_feedback">
+                  <div *ngIf="Submitted && Test_Register_Form.get('Tester_comments').hasError('required')">Enter
+                    Additional Comment
+                    is required
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 text-center mt-4">
+                <button type="submit" class="btn waves-effect waves-light btn-block btn-primary"
+                  [ngClass]="{'button--loading':Btn_Valid}"
+                  (click)="On_Ticket_Submit('Test_Submit')"><span>Next</span></button>
+              </div>
+            </form>
+          </ng-container>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

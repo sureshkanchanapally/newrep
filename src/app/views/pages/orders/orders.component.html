@@ -1,0 +1,70 @@
+<section class="breadcrumb">
+  <nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><b style="font-size: 20px;">Products</b></li>
+    </ol>
+  </nav>
+</section>
+
+
+<div class="content__loader" *ngIf="loader">
+  <div><i class="Favicon"></i></div>
+</div>
+
+<section id="product_details">
+  <div class="card" *ngIf="!ProductsData.length">
+    <div class="card-body">
+      <div class="col-md-12">
+        <h6> NO DATA AVAILABLE..!</h6>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="ProductsData?.length>0">
+    <div class="card_bg mb-3" *ngFor="let item of ProductsData">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="head-title">Purchase Order</div>
+            <div><b>{{item.ordernumber}}</b></div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="head-title">Customer</div>
+            <div> <b>{{item.buyername}}</b></div>
+          </div>
+
+          <div class="col-md-3 text-right">
+            <div class="head-title">Issue Date</div>
+            <div> <b>{{item.orderdate | date : 'dd/MM/yyyy'}}</b></div>
+          </div>
+
+          <div class="col-md-3 text-right">
+            <div class="head-title">Ship Date</div>
+            <div> <b>{{item.shipdate | date : 'dd/MM/yyyy'}}</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-2 p-3" id="product_list">
+        <ng-container *ngFor="let or of item.Orderitems">
+          <div class="col-lg-3 col-md-6 img-responsive" style="flex: 0 0 25%; max-width: 20%;">
+            <div class="card card_curv" [ngClass]="{'active': or.productid == selectedCTY}"
+              (click)="Select_Product(or,item)">
+              <img alt="Card image cap" class="card-img-top img-responsive" [src]="or.productimage_videourl"
+                onerror="this.src='assets/images/150-150.jpg'">
+              <div class="card-body">
+                <h5>{{or.productname}}</h5>
+                <ul style="list-style-type: none; text-align: left; padding: 0px;">
+                  <li>Qty : {{or.qty}}</li>
+                  <li>AQL : {{or.AQL}}</li>
+                  <!-- <li>Size : {{product.size}}</li> -->
+                </ul>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</section>

@@ -1,0 +1,56 @@
+#particles-js {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: 50% 50%;
+  position: fixed;
+  top: 0px;
+  z-index: 1;
+}
+
+.auth-wrapper .auth-box {
+  border: 1px solid #e1e1e1;
+  border-radius: 6px;
+  margin: 10px 0px 10px 0px !important;
+  padding: 40px 35px;
+  background-color: #fff;
+}
+
+.logo-text {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 0px;
+  color: #4061c0;
+  margin-top: 10px;
+}
+
+:host {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box_shadow {
+  box-shadow: rgb(0 0 0 / 10%) 0px 20px 25px -5px, rgb(0 0 0 / 4%) 0px 10px 10px -5px;
+  max-width: 370px;
+  // width: 90%;
+  // padding: 40px 35px;
+}
+
+// ----------------- login show pwd -----------------------
+.show_password {
+  position: relative;
+  top: -26px;
+  cursor: pointer;
+}
+
+.icon {
+  color: #6c757d;
+  font-size: 15px;
+  left: 90%;
+}
+
+.icon:hover {
+  color: #FDBC02;
+}

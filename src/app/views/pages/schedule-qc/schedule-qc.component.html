@@ -1,0 +1,128 @@
+<section class="breadcrumb">
+  <nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><b style="font-size: 20px;">Schedule QC Test</b></li>
+    </ol>
+  </nav>
+</section>
+
+
+<section id="form">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+
+        <div class="col-lg-8">
+          <div class="row d-flex flex-row m-t-0">
+            <div class="col-md-5 p-2">
+              <img alt="user" class="img-fluid" [src]="Product_Select.Imgurl" [alt]="Product_Select.productName"
+                >
+            </div>
+
+            <div class="col-md-7 p-2">
+              <div class="table-responsive">
+                <table class="table table-borderless mb-0 text-muted">
+                  <tbody>
+                    <tr>
+                      <th scope="row"> Product Id : </th>
+                      <td>{{Product_Select.productid}}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"> SKU : </th>
+                      <td>{{Product_Select.sku}}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"> Order Id : </th>
+                      <td>{{Product_Select.Orderid}}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"> Brand : </th>
+                      <td>{{Product_Select.Brand}}</td>
+                    </tr>
+
+                    <ng-container *ngIf="Product_Select.PackingDetails?.length">
+                      <tr>
+                        <th scope="row"> Packing Material : </th>
+                        <td>{{Product_Select.PackingDetails[0].packingmaterial}}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row"> Size : </th>
+                        <td>{{Product_Select.PackingDetails[0].dimension}}</td>
+                      </tr>
+                    </ng-container>
+
+                    <ng-container *ngIf="Product_Select.Cartondetails?.length">
+                      <tr>
+                        <th scope="row"> Carton Material : </th>
+                        <td>{{Product_Select.Cartondetails[0].cartontype}}</td>
+                      </tr>
+
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <ng-container>
+            <form [formGroup]="Schedule_Form">
+
+              <div class="col-md-12 mt-4 form-group mb-3">
+                <label class="col-form-label required">SOP Name</label>
+                <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="SOP_Data" [placeholder]="'Select'"
+                  formControlName="sopname">
+                </ng-multiselect-dropdown>
+                <div class="invalid_feedback">
+                  <div *ngIf="Submitted && Schedule_Form.get('sopname').hasError('required')">Enter SOP Name is required
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 mt-4 form-group mb-3">
+                <label class="col-form-label required">QC Engineer Name</label>
+                <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="SOP_Data" [placeholder]="'Select'"
+                  formControlName="qcname">
+                </ng-multiselect-dropdown>
+                <div class="invalid_feedback">
+                  <div *ngIf="Submitted && Schedule_Form.get('qcname').hasError('required')">Enter QC Engineer Name is required
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 form-group mb-3">
+                <label class="col-form-label required">Date</label>
+                <input type="datetime-local" class="form-control" formControlName="sc_date">
+                <div class="invalid_feedback">
+                  <div *ngIf="Submitted && Schedule_Form.get('sc_date').hasError('required')">Enter Date
+                    is required
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 form-group">
+                <label class="col-form-label required">Additional Comment</label>
+                <textarea class="form-control" formControlName="comments" placeholder="Comments"></textarea>
+                <div class="invalid_feedback">
+                  <div *ngIf="Submitted && Schedule_Form.get('comments').hasError('required')">Enter
+                    Additional Comment
+                    is required
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 text-center mt-4">
+                <button type="submit" class="btn waves-effect waves-light btn-block btn-primary"
+                  [ngClass]="{'button--loading':Btn_Valid}"
+                  (click)="On_Ticket_Submit('Test_Submit')"><span>Next</span></button>
+              </div>
+            </form>
+          </ng-container>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</section>

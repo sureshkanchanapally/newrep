@@ -1,0 +1,480 @@
+<section class="breadcrumb">
+  <nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><b style="font-size: 20px;">Products</b></li>
+      <!-- <li class="breadcrumb-item active" aria-current="page">Data table</li> -->
+    </ol>
+  </nav>
+</section>
+
+
+
+<section id="ProductRegistration">
+  <div class="card">
+    <div class="card-body">
+
+      <section *ngIf="ProductsGrid">
+
+        <div class="col-md-12 form-group text-end">
+          <button type="button" class="btn btn-primary" (click)="Add()">Add</button>
+        </div>
+
+        <ng-container class="col-sm-12" *ngIf="ProdLoader">
+          <h4 class="mt-3"><b>GETTING DETAILS</b>
+            <p>Please wait..</p>
+          </h4>
+          <div class="animated-background profile-image" style="height: 100px">
+          </div>
+          <div class="animated-background mt-2" *ngFor="let item of [].constructor(5)" style="min-height: 15px;">
+          </div>
+          <div class="animated-background" style="height: 30px">
+          </div>
+          <div class="animated-background" *ngFor="let item of [].constructor(4)" style="min-height: 15px;">
+          </div>
+        </ng-container>
+
+        <div *ngIf="!Products_Data.length && !ProdLoader">NO DATA AVAILABLE...!</div>
+
+
+        <div class="responsiveTable" *ngIf="Products_Data.length && !ProdLoader">
+          <table datatable [dtOptions]="CF.dtOption_Excel">
+            <thead>
+              <tr>
+                <th>Sno</th>
+                <th>Product Name</th>
+                <th>Fabric</th>
+                <th>Style</th>
+                <th>Style No</th>
+                <th>UPC No</th>
+                <th>Stone Wash</th>
+                <th>Available Qty</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of Products_Data; let i=index">
+                <td>{{i+1}}</td>
+                <td>{{item.productname}}</td>
+                <td>{{item.fabrictype}}</td>
+                <td>{{item.stylename}}</td>
+                <td>{{item.styleno}}</td>
+                <td>{{item.upcnumber}}</td>
+                <td>
+                  <span *ngIf="item.stonewash == 1">Yes</span>
+                  <span *ngIf="item.stonewash == 0">No</span>
+                </td>
+                <td>{{item.availableqty}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+      </section>
+
+
+      <ng-container *ngIf="!ProductsGrid">
+
+        <!-- ===========================]== Factory Selection =================================  -->
+
+        <section *ngIf="FactorySelection">
+
+
+          <div class="row">
+            <div class="col-md-6">
+              <h4 class="m-b-20 m-t-2">Factory Selection</h4>
+            </div>
+
+            <div class="col-md-6">
+              <div class="col-md-12 form-group text-end">
+                <button type="button" class="btn btn-danger" (click)="BackProduct('FactorySelection')">Back</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-5">
+              <h6 class="m-b-5 mt-4">Select the factory for product registration</h6>
+            </div>
+          </div>
+
+          <form [formGroup]="FactoryForm">
+            <div class="row">
+              <div class="col-md-4 form-group">
+                <label class="col-form-label required">Factory</label>
+                <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="FactoryData" [placeholder]="'Select Factory'"
+                  formControlName="Factory">
+                </ng-multiselect-dropdown>
+                <div class="invalid_feedback"
+                  *ngIf="factorySubmitted && FactoryForm.get('buyer')!.hasError('required')">
+                  Factory Name is required
+                </div>
+              </div>
+
+            </div>
+          </form>
+
+          <div class="row">
+            <div class="col-sm-12 text-end mt-3">
+              <button class="btn btn-primary btnWidthSub" [disabled]="FactoryForm.invalid"
+                (click)="onSelecteFactory()"><span>Next</span></button>
+            </div>
+          </div>
+
+
+
+        </section>
+
+
+        <!-- ============================= Category Selection =================================  -->
+
+        <section *ngIf="CategSelection">
+
+
+          <div class="row">
+            <div class="col-md-6">
+              <h4 class="m-b-20 m-t-2">Category Selection</h4>
+            </div>
+
+            <div class="col-md-6">
+              <div class="col-md-12 form-group text-end">
+                <button type="button" class="btn btn-danger" (click)="BackProduct('CategorySelection')">Back</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-5">
+              <h6 class="m-b-5 mt-4">Select the type of the category for product registration</h6>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2" *ngFor="let item of Categ_Info;let i=index">
+              <div class="product-card card-hover" (click)="selected_CategID = item.id">
+                <div
+                  [ngClass]="{'product-tum-Active': selected_CategID == item.id, 'product-tum' : selected_CategID != item.id}">
+                  <p>{{item.name}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12 text-end mt-3">
+              <button class="btn btn-primary btnWidthSub" [disabled]="selected_CategID == ''"
+                (click)="onSelectCateg()"><span>Next</span></button>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ============================= Product Details ====================================  -->
+
+        <section *ngIf="ProductDetails">
+
+          <div class="row">
+            <div class="col-md-6">
+              <h4 class="m-b-20 m-t-2">Product Details</h4>
+            </div>
+
+            <div class="col-md-6">
+              <div class="col-md-12 form-group text-end">
+                <button type="button" class="btn btn-danger" (click)="BackProduct('ProductDetails')">Back</button>
+              </div>
+            </div>
+          </div>
+
+          <form [formGroup]="prodDetailsForm">
+            <div class="row">
+
+              <div class="col-md-3 form-group">
+                <label class="col-form-label required">Product Name</label>
+                <input (keyup)="Allow_Only('[^a-zA-Z ]','ProductName')" class="form-control"
+                  formControlName="ProductName" placeholder="Product Name" type="text">
+                <div class="invalid_feedback"
+                  *ngIf="ProdDetailsSub && prodDetailsForm.get('ProductName')!.hasError('required')">
+                  Product Name is required
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-3 form-group">
+                <label class="col-form-label required">Style No</label>
+                <input (keyup)="Allow_Only('[^0-9]','StyleNo')" class="form-control" formControlName="StyleNo"
+                  placeholder="Style No" type="text">
+                <div class="invalid_feedback"
+                  *ngIf="ProdDetailsSub && prodDetailsForm.get('StyleNo')!.hasError('required')">
+                  Style No is required
+                </div>
+
+              </div>
+
+              <div class="col-md-3 form-group">
+                <label class="col-form-label required">Style Name</label>
+                <input (keyup)="Allow_Only('[^a-zA-Z ]','StyleName')" class="form-control" formControlName="StyleName"
+                  placeholder="Style Name" type="text">
+                <div class="invalid_feedback"
+                  *ngIf="ProdDetailsSub && prodDetailsForm.get('StyleName')!.hasError('required')">
+                  Style Name is required
+                </div>
+              </div>
+
+              <div class="col-md-3 form-group">
+                <label class="col-form-label required">UPC Number</label>
+                <input (keyup)="Allow_Only('[^0-9]','UPCNumber')" class="form-control" formControlName="UPCNumber"
+                  placeholder="UPC Number" type="text">
+                <div class="invalid_feedback"
+                  *ngIf="ProdDetailsSub && prodDetailsForm.get('UPCNumber')!.hasError('required')">
+                  UPC Number is required
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-3 form-group">
+                <label class="col-form-label required">Available Quantity</label>
+                <input (keyup)="Allow_Only('[^0-9]','AvailableQuantity')" class="form-control"
+                  formControlName="AvailableQuantity" placeholder="Available Quantity" type="text">
+                <div class="invalid_feedback"
+                  *ngIf="ProdDetailsSub && prodDetailsForm.get('AvailableQuantity')!.hasError('required')">
+                  Available Quantity is required
+                </div>
+              </div>
+
+              <div class="col-md-3 form-group">
+                <label class="col-form-label required">Ledger Quantity</label>
+                <input (keyup)="Allow_Only('[^0-9]','LedgerQuantity')" class="form-control"
+                  formControlName="LedgerQuantity" placeholder="Ledger Quantity" type="text">
+                <div class="invalid_feedback"
+                  *ngIf="ProdDetailsSub && prodDetailsForm.get('LedgerQuantity')!.hasError('required')">
+                  Ledger Quantity is required
+                </div>
+              </div>
+
+              <div class="col-md-3 form-group">
+                <label class="col-form-label required">Fabric Type</label>
+                <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="Fabric_Data" [placeholder]="'Fabric Type'"
+                  formControlName="FabricType">
+                </ng-multiselect-dropdown>
+                <div class="invalid_feedback"
+                  *ngIf="ProdDetailsSub && prodDetailsForm.get('FabricType')!.hasError('required')">
+                  Fabric Type is required
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-sm-5">
+                <input type="checkbox" style="height: 24px;width: 30px;margin: 18px 12px 0px 0px;"
+                  formControlName="StoneWash">
+                <label>Stone Wash</label>
+              </div>
+            </div>
+          </form>
+
+          <div class="row">
+            <div class="col-md-12">
+              <h6 class="m-b-5 mt-4">Upload video and photos of pre-production samples(10
+                Maximum)</h6>
+            </div>
+          </div>
+
+
+          <div class="row">
+
+            <div class="col-md-3 form-group">
+              <label class="col-form-label required">Type</label>
+
+              <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="Upload_Type" [placeholder]="'Type'"
+                [(ngModel)]="FileType" (onDeSelect)="onTypeDeSelect()">
+              </ng-multiselect-dropdown>
+
+              <div class="invalid_feedback" *ngIf="ImageUploadFlag && FileType == '' && !Product_Images.length">
+                Type is required
+              </div>
+            </div>
+
+            <div class="col-md-3 form-group">
+              <label class="col-form-label required">Image Type</label>
+
+              <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="Product_Images_Info" [placeholder]="'Image Type'"
+                [(ngModel)]="ImageType" [disabled]="FileType == ''" (onDeSelect)="onImgTypeDeSelect()">
+              </ng-multiselect-dropdown>
+
+              <div class="invalid_feedback" *ngIf="ImageUploadFlag && ImageType == '' && !Product_Images.length">
+                Image Type is required
+              </div>
+            </div>
+
+            <div class="col-md-3 form-group">
+              <label class="col-form-label required">Upload</label>
+
+              <input type="file" class="form-control" (change)="img_upload($event)" [(ngModel)]="UploadKey"
+                [disabled]="FileType == '' || ImageType == ''">
+
+              <div class="invalid_feedback" *ngIf="ImageUploadFlag && UploadKey == '' && !Product_Images.length">
+                Please Upload Required Number of Images
+              </div>
+
+
+
+              <!-- <div class="invalid_feedback"
+                                        *ngIf="ProdDetailsSub && prodDetailsForm.get('Upload')!.hasError('required')">
+                                        File required
+                                    </div> -->
+            </div>
+            <div class="col-sm-2" style="margin-top: 36px;">
+
+              <ng-container *ngIf="upload_Loader">
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label"></label>
+                  <div class="col-sm-6">
+                    <div class="spinner-border" role="status">
+                      <!-- <span class="sr-only">Loading...</span> -->
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 mt-3" *ngFor="let data of Product_Images;let i=index"
+              style="text-align: center;margin: auto 0px;">
+              <img [src]="data.productimage_videourl" style="width: 125px;height: 125px;padding:10px" />
+              <span style="width: 100%;float: left;">{{data.producttypename}}</span>
+
+            </div>
+
+
+          </div>
+
+
+
+          <div class="col-md-12 text-end mt-3">
+            <button type="submit" class="btn btn-primary btnWidthSub" (click)="OnSubmitProdInfo()"
+              [ngClass]="{'button--loading':validbutton}"><span>Save</span></button>
+          </div>
+
+        </section>
+
+        <!-- ============================== Packing Details ===================================  -->
+
+
+        <!-- <section *ngIf="PackingDetails">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="m-b-20 m-t-2">Packing Details</h4>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="col-md-12 form-group text-end">
+                                    <button type="button" class="btn btn-danger"
+                                        (click)="BackProduct('PackingDetails')">Back</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form [formGroup]="PackDetailsForm">
+                            <div class="row">
+                                <div class="col-md-4 form-group">
+                                    <label class="col-form-label required">Packing Material</label>
+                                    <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="Packing_Data"
+                                        [placeholder]="'Packing Material'" formControlName="PackingMaterial">
+                                    </ng-multiselect-dropdown>
+                                    <div class="invalid_feedback"
+                                        *ngIf="PackDetailsSub && PackDetailsForm.get('PackingMaterial')!.hasError('required')">
+                                        Packing Material is required
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 form-group">
+                                    <label class="col-form-label required">Dimension</label>
+
+                                    <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="Dimension_Data"
+                                        [placeholder]="'Dimension'" formControlName="Dimension">
+                                    </ng-multiselect-dropdown>
+                                    <div class="invalid_feedback"
+                                        *ngIf="PackDetailsSub && PackDetailsForm.get('Dimension')!.hasError('required')">
+                                        Dimension is required
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h6 class="m-b-5 mt-4">Upload video and photos of pre-production samples</h6>
+                                </div>
+
+                                <ng-container *ngFor="let item of Packing_Images_Info">
+                                    <button type="button" (click)="onClick()"
+                                        class="btn btn-outline-primary mt-2 uploadBTN"
+                                        [ngClass]="{'button--loading':uploadingloading}">
+                                        <i class="fas fa-arrow-up" style="font-size: 28px;"></i>
+                                        <span>{{item.productimgtype}}</span>
+                                    </button>
+                                    <input type="file" #fileUpload accept="" style="display:none;" />
+                                </ng-container>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <input type="checkbox" style="height: 24px;width: 30px;margin: 18px 12px 0px 0px;"
+                                        formControlName="StoneWash">
+                                    <label>Extra Packing Layer</label>
+                                </div>
+                            </div>
+                        </form>
+
+
+                        <div class="col-md-12 text-end mt-3">
+                            <button type="submit" class="btn btn-primary btnWidthSub" (click)="OnSubmitPackInfo()"
+                                [ngClass]="{'button--loading':validbutton}"><span>Enter carton details</span></button>
+                        </div>
+
+
+
+                    </section> -->
+
+        <!-- =============================== Carton Details ===================================  -->
+
+
+        <!-- <section *ngIf="CartonDetails">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="m-b-20 m-t-2">Carton datails</h4>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="col-md-12 form-group text-end">
+                                    <button type="button" class="btn btn-danger"
+                                        (click)="BackProduct('CartonDetails')">Back</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </section> -->
+
+      </ng-container>
+
+
+    </div>
+  </div>
+</section>

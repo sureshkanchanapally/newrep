@@ -1,0 +1,137 @@
+<section class="breadcrumb">
+  <nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><b style="font-size: 20px;">Categories</b></li>
+    </ol>
+  </nav>
+</section>
+
+<section id="CategoryRegistration_form">
+  <div class="card">
+    <div class="card-body">
+      <ng-container *ngIf="!AddCategForm">
+        <section id="CategoriesGrid">
+          <div class="row">
+            <div class="col-md-6">
+              <h4 class="m-b-20 m-t-2">Categories</h4>
+            </div>
+
+            <div class="col-md-6">
+              <div class="col-md-12 form-group text-end">
+                <button type="button" class="btn btn-primary" (click)="Add()">Add</button>
+              </div>
+            </div>
+          </div>
+
+
+          <ng-container class="col-sm-12" *ngIf="CategLoader">
+            <h4 class="mt-3"><b>GETTING DETAILS</b>
+              <p>Please wait..</p>
+            </h4>
+            <div class="animated-background profile-image" style="height: 100px">
+            </div>
+            <div class="animated-background mt-2" *ngFor="let item of [].constructor(5)" style="min-height: 15px;">
+            </div>
+            <div class="animated-background" style="height: 30px">
+            </div>
+            <div class="animated-background" *ngFor="let item of [].constructor(4)" style="min-height: 15px;">
+            </div>
+          </ng-container>
+
+          <div *ngIf="!Categ_Data.length && !CategLoader">NO DATA AVAILABLE...!</div>
+
+
+          <div class="responsiveTable" *ngIf="Categ_Data.length && !CategLoader">
+            <table datatable [dtOptions]="CF.dtOption_Excel">
+              <thead>
+                <tr>
+                  <th>Sno</th>
+                  <th>Factory ID</th>
+                  <th>Category Name</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of Categ_Data; let i=index">
+                  <td>{{i+1}}</td>
+                  <td>{{item.factoryid}}</td>
+                  <td>{{item.categoryname}}</td>
+
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
+        </section>
+
+      </ng-container>
+
+      <ng-container *ngIf="AddCategForm">
+
+        <section id="CategoryAddForm">
+
+          <div class="row">
+            <div class="col-md-6">
+              <h4 class="m-b-20 m-t-2">Product Category Registration</h4>
+
+            </div>
+
+            <div class="col-md-6">
+              <div class="col-md-12 form-group text-end">
+                <button type="button" class="btn btn-danger" (click)="Back()">Back</button>
+              </div>
+            </div>
+          </div>
+
+          <form [formGroup]="CategoryRegForm">
+            <div class="row">
+
+              <div class="col-md-4 form-group">
+                <label class="col-form-label required">Category Name</label>
+                <input (keyup)="Allow_OnlyCateg('[^a-zA-Z ]','CategoryName')" type="text" class="form-control"
+                  formControlName="CategoryName" placeholder="Category Name">
+                <div class="invalid_feedback"
+                  *ngIf="SubmittedCateg && CategoryRegForm.get('CategoryName')!.hasError('required')">
+                  Category Name is required
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-4 form-group">
+                <label class="col-form-label required">Factory Name</label>
+
+
+                <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="Factory_Data" [placeholder]="'Factory Name'"
+                  formControlName="FactoryName">
+                </ng-multiselect-dropdown>
+                <div class="invalid_feedback"
+                  *ngIf="SubmittedCateg && CategoryRegForm.get('FactoryName')!.hasError('required')">
+                  Factory Name is required
+                </div>
+              </div>
+
+            </div>
+
+
+
+
+
+            <div class="col-md-12 text-left mt-3">
+              <button type="submit" class="btn btn-primary btnWidthSub" (click)="OnSubmitCateg()"
+                [ngClass]="{'button--loading':validbutton}"><span>Save</span></button>
+            </div>
+          </form>
+        </section>
+
+
+      </ng-container>
+
+
+    </div>
+  </div>
+</section>

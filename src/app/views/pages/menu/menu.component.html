@@ -1,0 +1,203 @@
+<section class="breadcrumb">
+  <nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><b style="font-size: 20px;">Menu</b></li>
+      <!-- <li class="breadcrumb-item active" aria-current="page">Data table</li> -->
+    </ol>
+  </nav>
+</section>
+
+<section>
+  <div class="card">
+    <div class="card-body">
+
+      <div class="row">
+        <div class="col-md-5 form-group">
+          <label class="col-form-label required">Role</label>
+          <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="Roles_Data" [placeholder]="'Select'"
+            (onSelect)="onItemSelect($event)">
+          </ng-multiselect-dropdown>
+        </div>
+      </div>
+
+      <!-- <div class="col-md-12" *ngIf="!Menu_Data.length">
+        <h6> NO DATA AVAILABLE..!</h6>
+      </div> -->
+
+      <div *ngIf="Menu_Data.length">
+        <table class="table table-stripped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Selected</th>
+              <th>Path</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of Menu_Data">
+              <td>{{item.menuname}}</td>
+              <td><input type="checkbox" class="chkbox" [(ngModel)]="item.selected"></td>
+              <td>{{item.menu_url}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <hr>
+        <div class="row">
+          <div class="col-sm-12 text-center">
+            <button class="btn btn-primary" (click)="onUpdate()">Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="menu_access">
+  <div class="row center">
+    <div class="col-sm-6">
+      <ul class="tree" *ngFor="let item of Menu_Data">
+        <li>
+          <button (click)="Check(item)" class="btnn">
+            <p *ngIf="item.Show == true"><img src='assets/images/menu/p-icon.png'></p>
+            <p *ngIf="item.Show == false"><img src='assets/images/menu/m.icon.png'></p>
+          </button>
+          <label class="tree_label" for="c1">{{item.menuname}}</label>
+          <div *ngIf="item.Show != true">
+            <ul>
+              <li>
+                <input type="checkbox" [(ngModel)]="item.selected">
+                <span class="tree_label pl-2">Selected</span>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- <section >
+  <div class="row center">
+    <div class="col-sm-6">
+      <ul class="tree" *ngFor="let item of data.Data">
+        <li>
+          <button (click)="Check(item)" class="btnn">
+            <p *ngIf="item.Show == true"><img src='assets/images/menu/p-icon.png'></p>
+            <p *ngIf="item.Show == false"><img src='assets/images/menu/m.icon.png'></p>
+          </button>
+          <label class="tree_label" for="c1">{{item.title}}</label>
+          <div *ngIf="item.Show != true">
+            <ul *ngFor="let sm of item.submenu">
+              <li>
+                <button (click)="Check(sm)" class="btnn">
+                  <p *ngIf="sm.Show == true"><img src='assets/images/menu/p-icon.png'></p>
+                  <p *ngIf="sm.Show == false"><img src='assets/images/menu/m.icon.png'></p>
+                </button>
+                <label for="c2" class="tree_label">{{sm.title}}</label>
+                <div *ngIf="sm.Show != true">
+                  <ul>
+                    <li *ngIf="sm.actions != null && sm.actions.length != 0 &&  sm.actions.formAccess !=undefined">
+                      <input type="checkbox" [(ngModel)]="sm.actions.formAccess">
+                      <span class="tree_label">Fromacess</span>
+                    </li>
+                    <li *ngIf="sm.actions != null && sm.actions.length != 0 && sm.actions.Add!=undefined">
+                      <input type="checkbox" [(ngModel)]="sm.actions.Add">
+                      <span class="tree_label">Add</span>
+                    </li>
+                    <li *ngIf="sm.actions != null && sm.actions.length != 0 && sm.actions.Edit!=undefined">
+                      <input type="checkbox" [(ngModel)]="sm.actions.Edit">
+                      <span class="tree_label">Edit</span>
+                    </li>
+                    <li *ngIf="sm.actions != null && sm.actions.length != 0 && sm.actions.View!=undefined">
+                      <input type="checkbox" [(ngModel)]="sm.actions.View">
+                      <span class="tree_label">View</span>
+                    </li>
+                    <li *ngIf="sm.actions != null && sm.actions.length != 0 && sm.actions.Delete!=undefined">
+                      <input type="checkbox" [(ngModel)]="sm.actions.Delete">
+                      <span class="tree_label">Delete</span>
+                    </li>
+                    <li *ngIf="sm.actions != null && sm.actions.length != 0  && sm.actions.Approval!=undefined">
+                      <input type="checkbox" [(ngModel)]="sm.actions.Approval">
+                      <span class="tree_label">Approval</span>
+                    </li>
+                    <li *ngIf="sm.actions != null && sm.actions.length != 0  && sm.actions.Print!=undefined">
+                      <input type="checkbox" [(ngModel)]="sm.actions.Print">
+                      <span class="tree_label">Print</span>
+                    </li>
+                    <li *ngIf="sm.actions != null && sm.actions.length != 0  && sm.actions.ExportExcel!=undefined">
+                      <input type="checkbox" [(ngModel)]="sm.actions.ExportExcel">
+                      <span class="tree_label">EXport</span>
+                    </li>
+                  </ul>
+                  <ul *ngFor="let smchild of sm.submenu">
+                    <li>
+                      <button (click)="Check(smchild)" class="btnn">
+                        <p *ngIf="smchild.Show == true"><img src='assets/images/menu/p-icon.png'></p>
+                        <p *ngIf="smchild.Show == false"><img src='assets/images/menu/m.icon.png'></p>
+                      </button>
+                      <label for="c2" class="tree_label">{{smchild.title}}</label>
+                      <div *ngIf="smchild.Show != true">
+                        <ul>
+                          <li
+                            *ngIf="smchild.actions != null && smchild.actions.length != 0 && smchild.actions.formAccess!=undefined">
+                            <input type="checkbox" [(ngModel)]="smchild.actions.formAccess">
+                            <span class="tree_label">Fromacess</span>
+                          </li>
+                          <li
+                            *ngIf="smchild.actions != null && smchild.actions.length != 0 && smchild.actions.Add!=undefined">
+                            <input type="checkbox" [(ngModel)]="smchild.actions.Add">
+                            <span class="tree_label">Add</span>
+                          </li>
+                          <li
+                            *ngIf="smchild.actions != null && smchild.actions.length != 0 && smchild.actions.Edit!=undefined">
+                            <input type="checkbox" [(ngModel)]="smchild.actions.Edit">
+                            <span class="tree_label">Edit</span>
+                          </li>
+                          <li
+                            *ngIf="smchild.actions != null && smchild.actions.length != 0 && smchild.actions.View!=undefined">
+                            <input type="checkbox" [(ngModel)]="smchild.actions.View">
+                            <span class="tree_label">View</span>
+                          </li>
+                          <li
+                            *ngIf="smchild.actions != null && smchild.actions.length != 0 && smchild.actions.Delete!=undefined">
+                            <input type="checkbox" [(ngModel)]="smchild.actions.Delete">
+                            <span class="tree_label">Delete</span>
+                          </li>
+                          <li
+                            *ngIf="smchild.actions != null && smchild.actions.length != 0 && smchild.actions.Approval!=undefined">
+                            <input type="checkbox" [(ngModel)]="smchild.actions.Approval">
+                            <span class="tree_label">Approval</span>
+                          </li>
+                          <li
+                            *ngIf="smchild.actions != null && smchild.actions.length != 0 && smchild.actions.Print!=undefined">
+                            <input type="checkbox" [(ngModel)]="smchild.actions.Print">
+                            <span class="tree_label">Print</span>
+                          </li>
+                          <li
+                            *ngIf="smchild.actions != null && smchild.actions.length != 0 && smchild.actions.ExportExcel!=undefined">
+                            <input type="checkbox" [(ngModel)]="smchild.actions.ExportExcel">
+                            <span class="tree_label">Export</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                  </ul>
+
+                </div>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+      <ul>
+        <div align="center">
+          <button type="button" class="btn btn-warning ltr">
+            <span> Submit</span> </button>
+        </div>
+      </ul>
+    </div>
+  </div>
+</section> -->

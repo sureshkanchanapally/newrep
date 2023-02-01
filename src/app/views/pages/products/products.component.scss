@@ -1,0 +1,168 @@
+// =================================== form css =======================
+
+// .form-control,
+// .selected-list,
+// .c-btn {
+//   border: 0px;
+//   border-bottom: 1px solid #032c7c;
+//   border-color: #032c7c !important;
+//   border-radius: 0px;
+//   font-size: 18px;
+//   font-weight: 600;
+//   color: black !important;
+//   letter-spacing: 0px;
+//   height: calc(1.5em + 0rem + 2px);
+//   padding: 0rem 0.2rem;
+// }
+
+// .form-control:focus {
+//   box-shadow: none;
+// }
+
+.required {
+  color: #032c7c;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.req {
+  display: inline-block;
+  margin-bottom: 0rem;
+  font-weight: 600;
+  color: #032c7c;
+  margin: 3% 0px 0px 0px;
+  font-size: 16px;
+}
+
+// =================================== form css =======================
+
+
+
+.product-card {
+  position: relative;
+  box-shadow: 0 2px 7px #dfdfdf;
+  margin: 30px auto;
+  background: #fafafa;
+}
+
+.product-tumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  padding: 50px;
+  border: 2px solid #032c7c69;
+  background: #ffff;
+}
+
+.product-tumb:hover {
+  background-color: #66666624;
+}
+
+.product-tumb:active {
+  background-color: #032c7c47;
+}
+
+.product-tum {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 75px;
+  padding: 50px;
+  border: 2px solid #032c7c69;
+  background: #fff;
+  font-weight: 600;
+}
+
+.product-tum-Active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 75px;
+  padding: 50px;
+  border: 2px solid #032c7c69;
+  background: #032c7c47;
+  font-weight: 600;
+}
+
+.product-tum:hover {
+  background-color: #66666624 !important;
+}
+
+.product-tumb img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.product-bottom-details {
+  overflow: hidden;
+  border-top: 1px solid #032c7c;
+  background-color: #032c7c;
+  padding-top: 13px;
+}
+
+.product-links {
+  p {
+    color: #e1e1e1;
+    text-align: center;
+    text-transform: capitalize;
+  }
+}
+
+.uploadBTN {
+  height: 85px;
+  width: 89px;
+  margin-left: 18px;
+
+  span {
+    font-size: 10px;
+    float: left;
+    width: 100%;
+    text-align: center;
+    line-height: 10px;
+  }
+}
+
+
+
+
+.stepper{
+  p{
+    margin: 0px 0px 3px 0px;
+    font-size: 12px;
+    text-align: center;
+    font-weight: 500;
+    color: #1f438a;
+  }
+  ul{
+    list-style: none;
+    list-style: none;
+    float: right;
+    display: flex;
+    li{
+      margin: 0px 10px 0px 6px;
+      cursor: pointer;
+    }
+  }
+
+}
+
+.StepperItem{
+  border-radius: 2px;
+  height: 17px;
+  width: 56px;
+  background-color: #55555561;
+}
+
+
+.StepperItemActive{
+  border-radius: 2px;
+  height: 17px;
+  width: 56px;
+  background-color: #032c7ce3;
+}
+
+
+.btnWidth {
+  min-width: 200px !important;
+}

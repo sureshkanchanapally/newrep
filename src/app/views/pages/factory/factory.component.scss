@@ -1,0 +1,21 @@
+@import '../../../../assets/animated-loader';
+
+
+
+.btnWidth {
+  min-width: 200px !important;
+}
+
+.uploadBTN {
+  height: 85px;
+  width: 89px;
+  margin-left: 18px;
+
+  span {
+    font-size: 10px;
+    float: left;
+    width: 100%;
+    text-align: center;
+    line-height: 10px;
+  }
+}

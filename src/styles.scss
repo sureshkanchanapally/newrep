@@ -1,0 +1,511 @@
+/* You can add global styles to this file, and also import other style files */
+
+// Global icon font
+@import "./assets/fonts/feather/style.css";
+
+// // 3rd party plugins
+@import "@mdi/font/css/materialdesignicons.min.css";
+@import "perfect-scrollbar/css/perfect-scrollbar.css";
+@import "animate.css/animate.min.css";
+@import "metismenujs/scss/metismenujs";
+@import "quill/dist/quill.snow.css";
+
+// NobleUI styles for LTR
+@import "./assets/scss/style";
+
+
+
+// Form Validations
+.invalid_feedback {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: #EA4411;
+  margin-left: 4px;
+}
+
+// label {
+//   display: inline-block;
+//   margin-bottom: 0.5rem;
+//   font-weight: 500;
+// }
+
+label.required::after {
+  content: " *";
+  color: #EA4411;
+}
+
+textarea {
+  resize: none;
+}
+
+// Form Validations
+
+ngx-otp-input {
+  .my-super-class {
+    width: 62px !important;
+    height: 45px !important;
+  }
+}
+
+
+// Data TABLES
+.responsiveTable {
+  font-size: 14px;
+  // .dataTables_scroll {
+  //   box-shadow: 0 2px 4px 0 rgba(55, 67, 82, 0.2);
+  // }
+  .paginate_button {
+    border-radius: 50% !important;
+    // padding: 4px 10px !important;
+    $size: 25px;
+    width: $size;
+    height: $size;
+    padding: 0 !important;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 23px;
+  }
+
+  .previous,
+  .next {
+    width: auto !important;
+    border-radius: 0 !important;
+  }
+
+  .buttons-copy,
+  .buttons-excel,
+  .buttons-print {
+    border: 1px solid #fff !important;
+    background-image: none !important;
+    color: #fff;
+    transition: 150ms linear;
+  }
+
+  .buttons-copy {
+    &:hover {
+      opacity: 0.8;
+      background-color: #ff9800 !important;
+    }
+
+    background-color: #ff9800;
+  }
+
+  .buttons-excel {
+    &:hover {
+      opacity: 0.8;
+      background-color: #3759B9 !important;
+    }
+
+    background-color: #FDBC02;
+    border-radius: 3px;
+  }
+
+  .buttons-print {
+    &:hover {
+      opacity: 0.8;
+      background-color: #ff5722 !important;
+    }
+
+    background-color: #ff5722;
+  }
+
+  .dataTables_scrollBody {
+    border: none !important;
+  }
+
+  input[type="search"] {
+    border: 1px solid#ccc;
+    border-radius: 2px;
+    height: 34px;
+  }
+
+  .buttons-csv {
+    display: none !important;
+  }
+
+  div.dt-buttons {
+    float: right;
+    padding-left: 10px;
+  }
+
+  @media screen and (max-width: 600px) {
+    table {
+      border: 0;
+
+      thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+      }
+
+      tr {
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: 0.625em;
+      }
+
+      td {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        text-align: right;
+
+        &::before {
+          content: attr(data-title);
+          float: left;
+          font-weight: bold;
+          text-transform: uppercase;
+        }
+
+        &:last-child {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    .dataTables_wrapper .dataTables_filter {
+      margin-top: 0.5em;
+      margin-bottom: 0.9em;
+    }
+  }
+
+  table.dataTable thead .sorting_asc,
+  table.dataTable thead .sorting_desc {
+    background-image: none;
+  }
+
+  table.dataTable thead th {
+    padding: 5px 18px;
+    border-bottom: 1px solid #3759B9;
+    text-transform: capitalize;
+  }
+
+  thead th {
+    background: #3759B9;
+    color: #fff !important;
+  }
+
+  .current {
+    thead th {
+      background: #3759B9;
+      color: #fff !important;
+    }
+  }
+
+  .completed {
+    thead th {
+      background: #18b17a;
+      color: #fff !important;
+    }
+  }
+
+  table {
+    width: 100% !important;
+
+    tr {
+      background-color: #f8f8f8;
+      border: none;
+
+      &:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+    }
+
+    th,
+    td {
+      border: 1px solid #dee2e6;
+    }
+  }
+}
+
+// Data TABLES
+
+
+// ---------------------- Multi-Dropdown-------------------------------
+
+.my_dropdown .pure-checkbox input[type="checkbox"]+label:before {
+  border-width: 1px !important;
+}
+
+.my_dropdown .dropdown-list ul li {
+  border-top: 1px solid #ccc !important;
+}
+
+div textarea {
+  resize: none;
+}
+
+.my_dropdown .dropdown-list ul li label {
+  cursor: pointer;
+  margin-bottom: 0 !important;
+}
+
+.multiselect-dropdown .dropdown-btn {
+  display: inline-block;
+  border: 1px solid #ccc !important;
+  width: 100%;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-weight: 400;
+  line-height: 1.52857143;
+  text-align: left;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border-radius: 4px;
+  color: #7987a1 !important;
+}
+
+.multiselect-dropdown .dropdown-btn .selected-item {
+  border: 0px !important;
+  margin-right: 4px;
+  background: #ffffff !important;
+  padding: 0 5px;
+  color: #000 !important;
+  border-radius: 2px;
+  float: left;
+  padding-right: 18px !important;
+
+  // --------- DropDown height-----------
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  font-size: 0.900rem;
+  font-weight: 400;
+
+  a {
+    display: none !important;
+  }
+}
+
+.multiselect-dropdown .dropdown-btn .selected-item-container .selected-item {
+  max-width: 170px !important;
+}
+
+// &.ng-select-focused:not(.ng-select-opened)>.ng-select-container {
+//   border-color: $input-focus-border-color;
+// }
+
+.multiselect-dropdown .dropdown-btn:focus {
+  border-color: #3759B9 !important
+}
+
+.dropdown-list {
+  position: absolute;
+  padding-top: 6px;
+  width: 100%;
+  z-index: 9999;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  margin-top: 10px;
+  box-shadow: 0px 1px 5px #959595;
+  ul {
+    padding: 0px;
+    list-style: none;
+    overflow: auto;
+    margin: 0px;
+  }
+  li {
+    padding: 6px 10px;
+    cursor: pointer;
+    text-align: left;
+  }
+  .filter-textbox {
+    border-bottom: 1px solid #ccc;
+    position: relative;
+    padding: 10px;
+    input {
+      border: 0px !important;
+      border-color: #eceeef !important;
+      width: 100%;
+      padding: 0px 0px 0px 26px;
+      box-shadow: 0 0 10px #eceeef !important;
+    }
+    input:focus {
+      outline: none;
+    }
+  }
+}
+
+.multiselect-item-checkbox input[type="checkbox"] {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.multiselect-item-checkbox input[type="checkbox"]:focus+div:before,
+.multiselect-item-checkbox input[type="checkbox"]:hover+div:before {
+  border-color: #3759B9 !important;
+  background-color: #f2f2f2;
+}
+
+.multiselect-item-checkbox input[type="checkbox"]:active+div:before {
+  transition-duration: 0s;
+}
+
+.multiselect-item-checkbox input[type="checkbox"]+div {
+  position: relative;
+  padding-left: 2em;
+  vertical-align: middle;
+  user-select: none;
+  cursor: pointer;
+  margin: 0px;
+  color: #000;
+  font-size: 0.900rem !important;
+  font-weight: 400;
+}
+
+.multiselect-item-checkbox input[type="checkbox"]+div:before {
+  box-sizing: content-box;
+  content: "";
+  color: #3759B9 !important;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  margin-top: -9px;
+  border: 2px solid #3759B9 !important;
+  text-align: center;
+  transition: all 0.4s ease;
+}
+
+.multiselect-item-checkbox input[type="checkbox"]+div:after {
+  box-sizing: content-box;
+  content: "";
+  background-color: #3759B9 !important;
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  transform: scale(0);
+  transform-origin: 50%;
+  transition: transform 200ms ease-out;
+}
+
+.multiselect-item-checkbox input[type="checkbox"]:disabled+div:before {
+  border-color: #cccccc;
+}
+
+.multiselect-item-checkbox input[type="checkbox"]:disabled:focus+div:before
+.multiselect-item-checkbox input[type="checkbox"]:disabled:hover+div:before {
+  background-color: inherit;
+}
+
+.multiselect-item-checkbox input[type="checkbox"]:disabled:checked+div:before {
+  background-color: #cccccc;
+}
+
+.multiselect-item-checkbox input[type="checkbox"]+div:after {
+  background-color: transparent;
+  top: 50%;
+  left: 4px;
+  width: 8px;
+  height: 3px;
+  margin-top: -4px;
+  border-style: solid;
+  border-color: #ffffff;
+  border-width: 0 0 3px 3px;
+  border-image: none;
+  transform: rotate(-45deg) scale(0);
+}
+
+.multiselect-item-checkbox input[type="checkbox"]:checked+div:after {
+  content: "";
+  transform: rotate(-45deg) scale(1);
+  transition: transform 200ms ease-out;
+}
+
+.multiselect-item-checkbox input[type="checkbox"]:checked+div:before {
+  animation: borderscale 200ms ease-in;
+  background: #3759B9 !important;
+}
+
+.multiselect-item-checkbox input[type="checkbox"]:checked+div:after {
+  transform: rotate(-45deg) scale(1);
+}
+
+@keyframes borderscale {
+  50% {
+    box-shadow: 0 0 0 2px #3759B9 !important;
+  }
+}
+// ---------------------- Multi-Dropdown-------------------------------
+
+
+//  --------------------------- Button Loading -----------------------
+.button--loading {
+  position: relative;
+  cursor: wait;
+  pointer-events: none;
+  outline: 0;
+
+  :before {
+    content: "";
+    margin: -13px 0 0 -13px;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-border-radius: 24px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 24px;
+    -moz-background-clip: padding;
+    border-radius: 24px;
+    background-clip: padding-box;
+    border: 2px solid rgba(255, 255, 255, 0.75);
+    border-top-color: #504dd3;
+    -webkit-animation: animation-rotate 750ms linear infinite;
+    -moz-animation: animation-rotate 750ms linear infinite;
+    -o-animation: animation-rotate 750ms linear infinite;
+    animation: animation-rotate 750ms linear infinite;
+  }
+}
+
+.button--loading span,
+.button--loading:active span,
+.button--loading:hover span {
+  color: transparent;
+  text-shadow: none;
+}
+
+@-webkit-keyframes animation-rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes animation-rotate {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@-o-keyframes animation-rotate {
+  100% {
+    -o-transform: rotate(360deg);
+  }
+}
+
+@keyframes animation-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+//  --------------------------- Button Loading -----------------------

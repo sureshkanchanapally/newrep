@@ -1,0 +1,310 @@
+<section class="breadcrumb">
+  <nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><b style="font-size: 20px;">Reports</b></li>
+      <!-- <li class="breadcrumb-item active" aria-current="page">Data table</li> -->
+    </ol>
+  </nav>
+</section>
+
+<section *ngIf="!hidetable">
+  <div class="card">
+      <div class="card-body">
+          <div class="col-md-12" *ngIf="!Reports.length">
+            <h6> NO DATA AVAILABLE..!</h6>
+          </div>
+          <div class="responsiveTable" *ngIf="Reports.length">
+            <table  datatable [dtOptions]="CF.dtOption_Excel">
+              <thead>
+                  <tr>
+                      <th>Report Name</th>
+                      <th>Date</th>
+                      <th>Reports</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr (click)="general()" *ngFor="let item of Reports">
+                      <td>{{item.ReportName}}</td>
+                      <td>{{item.Date}}</td>
+                      <td>{{item.Reports}}</td>
+                      <td>
+                          <div>
+                              <img class="icon-img" src="assets\images\download.png">&nbsp;
+                              <img class="icon-img" src="assets\images\share.png">
+                          </div>
+                      </td>
+
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+  </div>
+</section>
+<section *ngIf="hidetable">
+  <div class="card" *ngIf="!hideform">
+      <div class="card-body">
+
+          <form [formGroup]="GeneralForm">
+              <div class="row">
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">Vendor Name</label>
+                      <input (keyup)="Allow_Only('[^a-zA-Z ]','name')" class="form-control"
+                          formControlName="VendorName">
+                      <div class="invalid_feedback"
+                          *ngIf="Submitted && GeneralForm.get('VendorName')!.hasError('required')">
+                          Vendor Name is required
+                      </div>
+                  </div>
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">Factory Name</label>
+                      <input class="form-control" (keyup)="Allow_Only('[^a-zA-Z ]','FactoryName')"
+                          formControlName="FactoryName">
+                      <div class="invalid_feedback"
+                          *ngIf="Submitted && GeneralForm.get('FactoryName')!.hasError('required')">
+                          Factory Name is required
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">VendorNumber</label>
+                      <input (keyup)="Allow_Only('[^0-9 ]','VendorNumber')" class="form-control"
+                          formControlName="VendorNumber">
+                      <div class="invalid_feedback"
+                          *ngIf="Submitted && GeneralForm.get('VendorNumber')!.hasError('required')">
+                          VendorNumber Name is required
+                      </div>
+                  </div>
+                  <div class="col-md-6 form-group mt-2">
+                          <label class="col-form-label required">Factory Business License</label>
+                          <input (keyup)="Allow_Only('[^a-zA-Z ]','FactoryBusinessLicense')" class="form-control"
+                              formControlName="FactoryBusinessLicense">
+                          <div class="invalid_feedback"
+                              *ngIf="Submitted && GeneralForm.get('VendorName')!.hasError('required')">
+                              FactoryBusinessLicense is required
+                          </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">agent/sourcing</label>
+                      <input class="form-control" (keyup)="Allow_Only('[^a-zA-Z]','agent')" formControlName="agent">
+                      <div class="invalid_feedback"
+                          *ngIf="Submitted && GeneralForm.get('agent')!.hasError('required')">
+                          agent is required
+                      </div>
+                  </div>
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">Factory ID</label>
+                      <input (keyup)="Allow_Only('[^0-9]','FactoryID')" class="form-control"
+                          formControlName="FactoryID">
+                      <div class="invalid_feedback"
+                          *ngIf="Submitted && GeneralForm.get('FactoryID')!.hasError('required')">
+                          Vendor Name is required
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">Brand Name</label>
+                      <input class="form-control" (keyup)="Allow_Only('[^a-zA-Z ]','BrandName')"
+                          formControlName="BrandName">
+                      <div class="invalid_feedback"
+                          *ngIf="Submitted && GeneralForm.get('BrandName')!.hasError('required')">
+                          BrandName is required
+                      </div>
+                  </div>
+                  <div class="col-md-6 form-group mt-2 ">
+                      <label class="col-form-label required">approvedSample</label>
+                      <div id="wrapper-radios">
+                          <div class="radios">
+                              <input type="radio" value='YES' id="radio1" name="approvedSample"
+                                  formControlName="approvedSample">
+                              <label for='radio1'>YES</label>
+                          </div>
+                          <div class="radios">
+                              <input type="radio" value='NO' id="radio2" name="approvedSample"
+                                  formControlName="approvedSample">
+                              <label for='radio2'>NO</label>
+                          </div>
+
+                      </div>
+
+
+
+
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">SKU</label>
+                      <input class="form-control" (keyup)="Allow_Only('[^0-9]','SKU')" formControlName="SKU">
+                      <div class="invalid_feedback" *ngIf="Submitted && GeneralForm.get('SKU')!.hasError('required')">
+                          SKU is required
+                      </div>
+                  </div>
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">ReferenceSample</label>
+
+
+                      <div id="wrapper-radios">
+                          <div class="radios">
+                              <input type="radio" value='YES' id="radio3" name="ReferenceSample"
+                                  formControlName="ReferenceSample">
+                              <label for='radio3'>YES</label>
+                          </div>
+                          <div class="radios">
+                              <input type="radio" value='NO' id="radio4" name="ReferenceSample"
+                                  formControlName="ReferenceSample">
+                              <label for='radio4'>NO</label>
+                          </div>
+
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">ProductDescription</label>
+                      <input (keyup)="Allow_Only('[^a-zA-Z ]','ProductDescription')" class="form-control"
+                          formControlName="ProductDescription">
+                      <div class="invalid_feedback"
+                          *ngIf="Submitted && GeneralForm.get('ProductDescription')!.hasError('required')">
+                          ProductDescription is required
+                      </div>
+                  </div>
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">CombinedSampling</label>
+                      <div id="wrapper-radios">
+                          <div class="radios">
+                              <input type="radio" value='YES' id="radio5" name="CombinedSampling"
+                                  formControlName="CombinedSampling">
+                              <label for='radio5'>YES</label>
+                          </div>
+                          <div class="radios">
+                              <input type="radio" value='NO' id="radio6" name="CombinedSampling"
+                                  formControlName="CombinedSampling">
+                              <label for='radio6'>NO</label>
+                          </div>
+
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">UPC</label>
+                      <input (keyup)="Allow_Only('[^0-9 ]','UPC')" class="form-control" formControlName="UPC">
+                      <div class="invalid_feedback" *ngIf="Submitted && GeneralForm.get('UPC')!.hasError('required')">
+                          UPC is required
+                      </div>
+                  </div>
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">PreviousInspction</label>
+                      <input class="form-control" (keyup)="Allow_Only('[^a-zA-Z ]','PreviousInspction')"
+                          formControlName="PreviousInspction">
+                      <div class="invalid_feedback"
+                          *ngIf="Submitted && GeneralForm.get('PreviousInspction')!.hasError('required')">
+                          Factory Name is required
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">ProductPO</label>
+                      <input (keyup)="Allow_Only('[^a-zA-Z ]','ProductPO')" class="form-control"
+                          formControlName="ProductPO">
+                      <div class="invalid_feedback"
+                          *ngIf="Submitted && GeneralForm.get('ProductPO')!.hasError('required')">
+                          ProductPO is required
+                      </div>
+                  </div>
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">ServicePerformed</label>
+                      <input class="form-control" (keyup)="Allow_Only('[^a-zA-Z ]','ServicePerformed')"
+                          formControlName="ServicePerformed">
+                      <div class="invalid_feedback"
+                          *ngIf="Submitted && GeneralForm.get('ServicePerformed')!.hasError('required')">
+                          ServicePerformed is required
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">VendorStyle</label>
+                      <input (keyup)="Allow_Only('[^a-zA-Z ]','VendorStyle')" class="form-control"
+                          formControlName="VendorStyle">
+                      <div class="invalid_feedback"
+                          *ngIf="Submitted && GeneralForm.get('VendorStyle')!.hasError('required')">
+                          VendorStyle is required
+                      </div>
+                  </div>
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">ProtocolNumber</label>
+                      <input class="form-control" (keyup)="Allow_Only('[^0-9]','ProtocolNumber')"
+                          formControlName="ProtocolNumber">
+                      <div class="invalid_feedback"
+                          *ngIf="Submitted && GeneralForm.get('ProtocolNumber')!.hasError('required')">
+                          ProtocolNumber is required
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">InspctionDate</label>
+                      <input class="form-control" formControlName="InspctionDate">
+                      <div class="invalid_feedback"
+                          *ngIf="Submitted && GeneralForm.get('InspctionDate')!.hasError('required')">
+                          Vendor Name is required
+                      </div>
+                  </div>
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">IFIversion</label>
+                      <input class="form-control" (keyup)="Allow_Only('[^0-9]','IFIversion')"
+                          formControlName="IFIversion">
+                      <div class="invalid_feedback"
+                          *ngIf="Submitted && GeneralForm.get('IFIversion')!.hasError('required')">
+                          IFIversion is required
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">InspectionLocation</label>
+                      <input (keyup)="Allow_Only('[^a-zA-Z ]','InspectionLocation')" class="form-control"
+                          formControlName="InspectionLocation">
+                      <div class="invalid_feedback"
+                          *ngIf="Submitted &&GeneralForm.get('InspectionLocation')!.hasError('required')">
+                          InspectionLocation is required
+                      </div>
+                  </div>
+                  <div class="col-md-6 form-group mt-2">
+                      <label class="col-form-label required">InspectionName</label>
+                      <input class="form-control" (keyup)="Allow_Only('[^a-zA-Z ]','InspectionName')"
+                          formControlName="InspectionName">
+                      <div class="invalid_feedback"
+                          *ngIf="Submitted && GeneralForm.get('InspectionName')!.hasError('required')">
+                          InspectionName is required
+                      </div>
+                  </div>
+              </div>
+
+
+              <div class="col-sm-12 form-button text-center  mt-3">
+                  <button class="btn btn-primary" (click)="next()"><span> Next </span></button>
+
+              </div>
+
+
+          </form>
+      </div>
+  </div>
+</section>
+<section *ngIf="hideform">
+  <div class="card">
+      <div class="card-body">
+      </div>
+  </div>
+</section>

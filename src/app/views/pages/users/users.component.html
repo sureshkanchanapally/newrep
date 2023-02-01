@@ -1,0 +1,157 @@
+<section class="breadcrumb">
+  <nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><b style="font-size: 20px;">Users</b></li>
+      <!-- <li class="breadcrumb-item active" aria-current="page">Data table</li> -->
+    </ol>
+  </nav>
+</section>
+
+<section id="user_details" *ngIf="!Hide_Table">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <h4 class="m-b-20 m-t-2">Users</h4>
+        </div>
+        <div class="col-md-6">
+          <div class="col-md-12 form-group text-end">
+            <button type="button" class="btn btn-primary" (click)="Add_Users()"> + Add</button>
+          </div>
+        </div>
+      </div>
+      <ng-container class="col-sm-12" *ngIf="!UsersData.length && No_Details">
+        <h4 class="mt-3"><b>GETTING DETAILS</b>
+          <p>Please wait..</p>
+        </h4>
+        <div class="animated-background profile-image" style="height: 100px">
+        </div>
+        <div class="animated-background mt-2" *ngFor="let item of [].constructor(5)" style="min-height: 15px;">
+        </div>
+        <div class="animated-background" style="height: 30px">
+        </div>
+        <div class="animated-background" *ngFor="let item of [].constructor(4)" style="min-height: 15px;">
+        </div>
+      </ng-container>
+
+      <div *ngIf="!UsersData.length && !No_Details">NO DATA AVAILABLE...!</div>
+
+      <div class="responsiveTable" *ngIf="UsersData.length && !No_Details">
+        <table datatable [dtOptions]="CF.dtOption_Excel">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Employee ID</th>
+              <th>Role Name</th>
+              <th>Phone No</th>
+              <th>Products Tested</th>
+              <th>Mail</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of UsersData; let i=index" (click)="Edit_User(item)">
+              <td>{{item.username}}</td>
+              <td></td>
+              <td>{{item.userroles[0].roledata[0].rolename}}</td>
+              <td>{{item.mobileno}}</td>
+              <td></td>
+              <td>{{item.emailid}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="user_form" *ngIf="Hide_Table">
+  <div class="card">
+    <div class="card-body">
+
+      <div class="col-md-12 form-group text-end">
+        <button type="button" class="btn btn-danger" (click)="Back()">Back</button>
+      </div>
+
+      <form [formGroup]="UserForm">
+        <div class="row">
+
+          <div class="col-md-4 form-group">
+            <label class="col-form-label required">Name</label>
+            <input (keyup)="Allow_Only('[^a-zA-Z ]','name')" class="form-control" formControlName="name"
+              placeholder="Name">
+            <div class="invalid_feedback" *ngIf="Submitted && UserForm.get('name')!.hasError('required')">
+              Name is required
+            </div>
+          </div>
+
+          <div class="col-md-4 form-group">
+            <label class="col-form-label required">Employee ID</label>
+            <input (keyup)="Allow_Only('[^a-zA-Z0-9]','EMPID')" class="form-control" formControlName="EMPID"
+              placeholder="Employee ID">
+            <div class="invalid_feedback" *ngIf="Submitted && UserForm.get('EMPID')!.hasError('required')">
+              Employee ID is required
+            </div>
+          </div>
+
+          <div class="col-md-4 form-group">
+            <label class="col-form-label required">Phone No</label>
+            <input class="form-control" (keyup)="Allow_Only('[^0-9]','phoneno')" minlength="10" maxlength="10"
+              formControlName="phoneno" placeholder="Phone No">
+            <div class="invalid_feedback">
+              <div *ngIf="Submitted && UserForm.get('phoneno').hasError('required')">Mobile Number is required
+              </div>
+              <div *ngIf="Submitted && UserForm.get('phoneno')!.hasError('pattern')"> invalid mobile </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-4 form-group">
+            <label class="col-form-label required">Email</label>
+            <input type="text" class="form-control" formControlName="Emailid" placeholder="Email">
+            <div class="invalid_feedback">
+              <div *ngIf="Submitted && UserForm.get('Emailid').hasError('required')">Enter email id is
+                required</div>
+              <div *ngIf="Submitted && UserForm.get('Emailid').hasError('pattern')">Invalid email id</div>
+            </div>
+          </div>
+
+          <div class="col-md-4 form-group">
+            <label class="col-form-label required">Select Role</label>
+            <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="Roles_Data" [placeholder]="'Select Role'"
+              formControlName="roles">
+            </ng-multiselect-dropdown>
+            <div class="invalid_feedback" *ngIf="Submitted && UserForm.get('roles')!.hasError('required')">
+              Role is required
+            </div>
+          </div>
+
+          <div class="col-md-4 form-group">
+            <label class="col-form-label required">Status</label>
+            <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="Roles_Status" [placeholder]="'Status'"
+              formControlName="status">
+            </ng-multiselect-dropdown>
+            <div class="invalid_feedback" *ngIf="Submitted && UserForm.get('status')!.hasError('required')">
+              Status is required
+            </div>
+          </div>
+
+          <div class="col-md-4 form-group">
+            <label class="col-form-label required">Address</label>
+            <textarea class="form-control" rows="2" cols="50" formControlName="address"
+              placeholder="Address"></textarea>
+          </div>
+
+        </div>
+
+        <div class="col-md-12 text-center mt-3">
+          <button type="submit" class="btn btn-primary" (click)="OnSubmit()" [ngClass]="{'button--loading':validbutton}"
+            *ngIf="!Edit_Details"><span>Submit</span></button>
+          <button type="submit" class="btn btn-primary" (click)="OnUpdate()" [ngClass]="{'button--loading':validbutton}"
+            *ngIf="Edit_Details"><span>Update</span></button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</section>

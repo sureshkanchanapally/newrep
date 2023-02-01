@@ -1,0 +1,130 @@
+<section class="breadcrumb">
+  <nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><b style="font-size: 20px;">Industry</b></li>
+    </ol>
+  </nav>
+</section>
+
+
+<section id="INDUSTRY_details" *ngIf="!Hide_Table">
+  <div class="card">
+    <div class="card-body">
+      <div class="row ">
+        <div class="col-md-6">
+          <h4 class="m-b-20 m-t-2">List of existing industries</h4>
+        </div>
+        <div class="col-md-6">
+          <div class="col-md-12 form-group text-end">
+            <button type="button" class="btn btn-primary" (click)="Add_INDUSTRY()"> + Add</button>
+          </div>
+        </div>
+      </div>
+      <ng-container class="col-sm-12" *ngIf="!IndustriesData.length && No_Details">
+        <h4 class="mt-3"><b>GETTING DETAILS</b>
+          <p>Please wait..</p>
+        </h4>
+        <div class="animated-background profile-image" style="height: 100px">
+        </div>
+        <div class="animated-background mt-2" *ngFor="let item of [].constructor(5)" style="min-height: 15px;">
+        </div>
+        <div class="animated-background" style="height: 30px">
+        </div>
+        <div class="animated-background" *ngFor="let item of [].constructor(4)" style="min-height: 15px;">
+        </div>
+      </ng-container>
+
+      <div *ngIf="!IndustriesData.length && !No_Details">NO DATA AVAILABLE...!</div>
+      <div class="responsiveTable" *ngIf="IndustriesData.length && !No_Details">
+        <table datatable [dtOptions]="CF.dtOption_Excel">
+          <thead>
+            <tr>
+              <th>Sno</th>
+              <th>Industry Name</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of IndustriesData; let i = index;">
+              <td>{{i+1}}</td>
+              <td>{{item.industryname}}</td>
+              <td>{{item.industrydescription}}</td>
+              <td>
+                <span *ngIf="item.status == 1">Active</span>
+                <span *ngIf="item.status == 0">InActive</span>
+              </td>
+              <td align="center"><button class="btn btn-sm btn-primary" (click)="Edit_INDUSTRY(item)"><i
+                    class="fas fa-pencil-alt"></i>&nbsp;Edit</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="INDUSTRY_form" *ngIf="Hide_Table">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <h4 class="m-b-20 m-t-2" *ngIf="!Edit_Details">Industry Registration</h4>
+          <h4 class="m-b-20 m-t-2" *ngIf="Edit_Details">Update Industry</h4>
+        </div>
+
+        <div class="col-md-6">
+          <div class="col-md-12 form-group text-end">
+            <button type="button" class="btn btn-danger" (click)="Back()">Back</button>
+          </div>
+        </div>
+      </div>
+
+      <form [formGroup]="IndustryForm">
+        <div class="row">
+          <div class="col-md-4 form-group">
+            <label class="col-form-label required">Name of industry</label>
+            <input (keyup)="Allow_Only('[^a-zA-Z ]','nameOfIndustry')" class="form-control"
+              formControlName="nameOfIndustry" placeholder="Name of industry">
+            <div class="invalid_feedback" *ngIf="Submitted && IndustryForm.get('nameOfIndustry')!.hasError('required')">
+              Name of industry is required
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 form-group">
+            <label class="col-form-label required">Description</label>
+            <textarea class="form-control" formControlName="Description" placeholder="Description" rows="4">
+            </textarea>
+            <div class="invalid_feedback" *ngIf="Submitted && IndustryForm.get('Description')!.hasError('required')">
+              Description is required
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 form-group">
+            <label class="col-form-label required">Status</label>
+            <ng-multiselect-dropdown [settings]="CF.SDDL" [data]="CF.Status" [placeholder]="'Status'"
+              formControlName="status">
+            </ng-multiselect-dropdown>
+            <div class="invalid_feedback" *ngIf="Submitted && IndustryForm.get('status')!.hasError('required')">
+              Status is required
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 text-left mt-3">
+          <button type="submit" class="btn btn-primary btnWidth" (click)="OnSubmit()"
+            [ngClass]="{'button--loading':validbutton}" *ngIf="!Edit_Details"><span>Save</span></button>
+          <button type="submit" class="btn btn-primary btnWidth" (click)="OnUpdate()"
+            [ngClass]="{'button--loading':validbutton}" *ngIf="Edit_Details"><span>Update</span></button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</section>
